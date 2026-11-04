@@ -1508,7 +1508,44 @@ body.modal-open {
   cursor: pointer;
 }
 .btn-pill.primary { background: var(--spots-blue-welcome); color: white; }
+.btn-pill.success { background: var(--spots-green); color: white; }
+.btn-pill.success:hover { filter: brightness(0.95); }
 .btn-pill[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+/* Questionnaire post-submit success (thumbs-up + Saved + Close) */
+.modal-card--saved {
+  text-align: center;
+  padding-top: 28px;
+  padding-bottom: 26px;
+}
+.modal-card--saved .q-saved-icon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+}
+.modal-card--saved .q-saved-label {
+  display: inline-block;
+  margin: 0 auto 22px;
+  padding: 10px 36px;
+  font-family: var(--font-headings);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--spots-gray-900);
+  background: #fff;
+  border: 2px solid var(--spots-blue-welcome);
+  border-radius: 10px;
+  /* Override default `.modal-card h2` underline */
+  border-bottom: 2px solid var(--spots-blue-welcome);
+  padding-bottom: 10px;
+  text-align: center;
+  width: auto;
+  max-width: 100%;
+}
+.modal-card--saved .modal-actions--saved {
+  display: flex;
+  justify-content: center;
+}
 
 /* =================================================================== */
 /* TUTORIAL PROGRESS DOCK                                                */

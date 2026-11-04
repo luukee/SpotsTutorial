@@ -19,6 +19,10 @@ export const state = {
   currentSearchQuery: '',
   pendingSymptom: null,
   questionStep: 0,
+  // After Save (add) or Done (edit), the questionnaire swaps to a thumbs-up
+  // "Saved" confirmation. Cleared on Close / open / logout. Pending symptom
+  // stays mounted so the dialog can show this view.
+  showSavedSuccess: false,
   // When editing an already-selected symptom (clicked from the Problem
   // Station), the question modal points `pendingSymptom` AT the live entry
   // in `state.selected` so every answer write persists immediately — no
