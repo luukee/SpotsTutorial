@@ -63,6 +63,7 @@ export function logout() {
   state.pendingSymptom = null;
   state.questionStep = 0;
   state.editingSymptomId = null;
+  state.showSavedSuccess = false;
   state.currentBodyPart = null;
   state.currentActivity = null;
   state.currentSearchQuery = '';
@@ -117,6 +118,7 @@ export function skipToNextSession() {
   state.pendingSymptom = null;
   state.questionStep = 0;
   state.editingSymptomId = null;
+  state.showSavedSuccess = false;
   state.currentBodyPart = null;
   state.currentActivity = null;
   state.currentSearchQuery = '';
@@ -154,7 +156,23 @@ export function toggleSymptom(category, subcategory, contextLabel, name) {
     dateAdded: new Date(),
   };
   state.questionStep = 0;
+  state.showSavedSuccess = false;
   render();
+}
+
+// Dismiss the questionnaire (Cancel / Saved Close / Escape). Activity-detail
+// origins return to the Activities grid so the nested pick overlay does not
+// linger after the question card goes away.
+export function dismissQuestionnaireModal() {
+  stopSpeaking();
+  const origin = state.pendingSymptom && state.pendingSymptom.originScreen;
+  const fromActivity = origin === 'activity-detail' || origin === 'activities';
+  state.pendingSymptom = null;
+  state.editingSymptomId = null;
+  state.questionStep = 0;
+  state.showSavedSuccess = false;
+  if (fromActivity) go('activities');
+  else render();
 }
 
 // Per-symptom required question ids. Mirrors the production app's
@@ -172,6 +190,7 @@ export function openEditSymptom(sym) {
   state.editingSymptomId = sym.id;
   state.pendingSymptom = sym;
   state.questionStep = 0;
+  state.showSavedSuccess = false;
   if (state.session === 2) state.tutorialFlags.session2VisitedReview = true;
   render();
 }

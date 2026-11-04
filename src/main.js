@@ -3,7 +3,7 @@ import '../styles.css';
 import { render, root } from './render.js';
 import { state } from './state.js';
 import { loadTranslations, translationsLoaded } from './i18n.js';
-import { stopSpeaking } from './speech.js';
+import { dismissQuestionnaireModal } from './navigation.js';
 
 const FOCUSABLE_SELECTOR = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -31,11 +31,8 @@ document.addEventListener('keydown', (e) => {
     state.activeHintKey = null;
     render();
   } else if (state.pendingSymptom) {
-    stopSpeaking();
-    state.pendingSymptom = null;
-    state.editingSymptomId = null;
-    state.questionStep = 0;
-    render();
+    // Same dismiss path as Cancel / Saved Close (activity-detail → Activities).
+    dismissQuestionnaireModal();
   } else if (!state.introDismissed && state.session === 1 && state.screen === 'home') {
     state.introDismissed = true;
     render();

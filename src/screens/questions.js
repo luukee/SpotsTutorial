@@ -4,7 +4,7 @@ import { tutorialProgressItems, isCurrentSessionComplete } from '../progress.js'
 import { D } from '../data.js';
 import { el } from '../dom.js';
 import { t, tLabel, tSymptom, tOption, fillTemplate, joinSpokenSentences, setLanguage } from '../i18n.js';
-import { go, logout, skipToNextSession, toggleSymptom, openEditSymptom } from '../navigation.js';
+import { go, logout, skipToNextSession, toggleSymptom, openEditSymptom, dismissQuestionnaireModal } from '../navigation.js';
 import { render } from '../render-ref.js';
 import { readAloudButton, speakOptionButton, tapSpeakerTip, stopSpeaking } from '../speech.js';
 import { categoryLabelFor, formatDateMDY } from '../utils.js';
@@ -12,6 +12,36 @@ import { categoryLabelFor, formatDateMDY } from '../utils.js';
 export function questionModal() {
   const sym = state.pendingSymptom;
   if (!sym) return null;
+
+  // Post-submit success view (add Save or edit Done). Mirrors the real app's
+  // SymptomQuestionnaire thumbs-up + Saved + Close. Close-only dismiss —
+  // backdrop clicks do nothing while this view is showing.
+  if (state.showSavedSuccess) {
+    const savedLabel = t('Saved', 'Guardado');
+    return el('div', { class: 'modal-backdrop' },
+      el('div', {
+        class: 'modal-card modal-card--saved',
+        role: 'dialog',
+        'aria-modal': 'true',
+        'aria-labelledby': 'q-saved-title',
+        'aria-label': savedLabel,
+      },
+        el('img', {
+          class: 'q-saved-icon',
+          src: '/assets/questionnaire/thumbs-up.svg',
+          alt: '',
+        }),
+        el('h2', { id: 'q-saved-title', class: 'q-saved-label' }, savedLabel),
+        el('div', { class: 'modal-actions modal-actions--saved' },
+          el('button', {
+            class: 'btn-pill success',
+            onclick: () => dismissQuestionnaireModal(),
+          }, t('Close')),
+        ),
+      ),
+    );
+  }
+
   // Per-symptom required question ids — feelings get 2 steps, others 3.
   // The modal's step count, progress dots, and prompts are all driven from
   // this list (not `D.ratingQuestions.length`). Each id here is looked up
@@ -36,21 +66,18 @@ export function questionModal() {
   const isLastStep = step + 1 === totalSteps;
 
   function close() {
-    // Closing the modal — add or edit — never sets `completedSession`.
-    // Session completion happens in `logout()`.
-    stopSpeaking();
-    state.pendingSymptom = null;
-    state.editingSymptomId = null;
-    state.questionStep = 0;
-    render();
+    // Closing without a Saved confirmation — Cancel / Back-on-step-0 /
+    // backdrop. Activity-detail origins return to the Activities grid.
+    dismissQuestionnaireModal();
   }
 
   function next() {
     stopSpeaking();
     if (step + 1 < totalSteps) { state.questionStep = step + 1; render(); }
     else if (isEditMode) {
-      // Edit-mode "Done": same as Close — dismiss the modal.
-      close();
+      // Edit-mode "Done": show Saved confirmation (edits already live).
+      state.showSavedSuccess = true;
+      render();
     } else {
       // Add-mode finalize (Save on last step). Push the new symptom into
       // the cart and bump the per-session counter. Session completion is
@@ -71,8 +98,8 @@ export function questionModal() {
       // problem" step. Reset on logout, so a session-1 report does NOT
       // pre-credit the user in session 2.
       state.sessionProblemsLogged += 1;
-      state.pendingSymptom = null;
-      state.questionStep = 0;
+      // Keep pendingSymptom mounted so the Saved confirmation can render.
+      state.showSavedSuccess = true;
       render();
     }
   }
