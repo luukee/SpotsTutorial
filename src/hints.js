@@ -7,7 +7,7 @@ import { t, tLabel, tSymptom, tOption, fillTemplate, joinSpokenSentences, setLan
 import { go, logout, skipToNextSession, toggleSymptom, openEditSymptom } from './navigation.js';
 import { render } from './render-ref.js';
 import { readAloudButton, speakOptionButton, tapSpeakerTip, stopSpeaking } from './speech.js';
-import { categoryLabelFor, formatDateMDY } from './utils.js';
+import { categoryLabelFor, formatDateMDY, TRASH_SVG } from './utils.js';
 import { NAV_ICONS } from './nav-icons.js';
 import { siteHeader, logoCorner, navButton } from './shell/header.js';
 import { siteFooter } from './shell/footer.js';
