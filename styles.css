@@ -1533,10 +1533,7 @@ body.modal-open {
   font-size: 20px;
   color: var(--spots-gray-900);
   background: #fff;
-  border: 2px solid var(--spots-blue-welcome);
-  border-radius: 10px;
   /* Override default `.modal-card h2` underline */
-  border-bottom: 2px solid var(--spots-blue-welcome);
   padding-bottom: 10px;
   text-align: center;
   width: auto;
