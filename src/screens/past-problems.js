@@ -86,17 +86,3 @@ export function pastProblemsScreen() {
     siteFooter(),
   );
 }
-
-// ---- Tutorial hint modal (animated walkthroughs)
-// Reusable cursor SVG (white-fill black-stroke pointer)
-const HINT_CURSOR_SVG =
-  '<svg viewBox="0 0 24 24" aria-hidden="true">' +
-  '<path d="M3 2 L3 19 L8 14.5 L11 21 L14 19.5 L11 13 L18 13 Z" ' +
-  'fill="#ffffff" stroke="#101828" stroke-width="1.4" stroke-linejoin="round"/>' +
-  '</svg>';
-
-// Build the abstracted mini-header used by every demo. `concreteKey` is the
-// nav slot that should render as the real `_02` SVG icon — every other slot
-// renders as a colored circle in the SPOTS palette. `opts.concreteAvatar`
-// (used by the "completed" / logout demo) swaps the abstract avatar dot for
-// the real avatarAsset.svg so the user recognizes the click target.
