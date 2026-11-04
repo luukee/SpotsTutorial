@@ -1,0 +1,29 @@
+{
+  "name": "SPOTS Tutorial",
+  "short_name": "SPOTS Tutorial",
+  "description": "An interactive tutorial of SPOTS — a pediatric symptom-reporting tool built by UTHealth Houston Cizik School of Nursing to help children and teens with cancer track how they're feeling throughout treatment.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#065395",
+  "theme_color": "#065395",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
