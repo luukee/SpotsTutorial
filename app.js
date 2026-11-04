@@ -55,6 +55,8 @@
     // needs to detect a NEW report after returning, regardless of what carries
     // over in pastProblemsArchive.
     sessionProblemsLogged: 0,
+    // Browser TTS (speechSynthesis) speaking state for Listen / Stop toggle.
+    isSpeaking: false,
     tutorialFlags: {
       // Session 1 flags. Per-page "Pick a … symptom" milestones are sticky —
       // they flip true when a symptom from that screen is finalized through
@@ -133,6 +135,7 @@
   function uid() { return Math.random().toString(36).slice(2, 10); }
 
   function go(screen, opts = {}) {
+    stopSpeaking();
     state.screen = screen;
     Object.assign(state, opts);
     // Tutorial milestone flags. Session 1 has a "View Past Problems" step that
@@ -274,6 +277,7 @@
   }
 
   function toggleSymptom(category, subcategory, contextLabel, name) {
+    stopSpeaking();
     const existing = findSelected(category, subcategory, name);
     if (existing) {
       state.selected = state.selected.filter(s => s !== existing);
@@ -355,8 +359,144 @@
   function tSymptom(name) { return t(name); }
   function tOption(label) { return t(label); }
 
+  // Replace `{key}` placeholders in loc strings (Listen scripts, aria labels).
+  function fillTemplate(str, vars) {
+    return String(str).replace(/\{(\w+)\}/g, (_, key) => (
+      vars[key] != null ? String(vars[key]) : ''
+    ));
+  }
+
+  // Join spoken sentences so TTS pauses between clauses (mirrors spots-app
+  // joinSpokenSentences).
+  function joinSpokenSentences(parts) {
+    const cleaned = parts.map((part) => String(part || '').trim()).filter(Boolean);
+    if (cleaned.length === 0) return '';
+    return cleaned
+      .map((part, index) => {
+        if (index === cleaned.length - 1) return part;
+        if (/[.!?]$/u.test(part)) return part;
+        return part + '.';
+      })
+      .join(' ');
+  }
+
+  // ---- Read aloud (browser speechSynthesis; mirrors spots-app hooks) ----
+  const ICON_VOLUME =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>' +
+    '<path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>' +
+    '<path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>' +
+    '</svg>';
+  const ICON_STOP =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">' +
+    '<rect x="6" y="6" width="12" height="12" rx="1"/>' +
+    '</svg>';
+
+  function isSpeechSupported() {
+    return typeof window !== 'undefined'
+      && typeof window.speechSynthesis !== 'undefined'
+      && typeof window.SpeechSynthesisUtterance !== 'undefined';
+  }
+
+  function speechLang() {
+    return state.language === 'es' ? 'es-US' : 'en-US';
+  }
+
+  function stopSpeaking() {
+    if (isSpeechSupported()) {
+      try { window.speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+    }
+    if (state.isSpeaking) {
+      state.isSpeaking = false;
+    }
+  }
+
+  function speak(text) {
+    if (!isSpeechSupported()) return;
+    const trimmed = String(text || '').trim();
+    if (!trimmed) return;
+    try { window.speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+    const utterance = new SpeechSynthesisUtterance(trimmed);
+    utterance.lang = speechLang();
+    utterance.onend = () => {
+      state.isSpeaking = false;
+      render();
+    };
+    utterance.onerror = () => {
+      state.isSpeaking = false;
+      render();
+    };
+    state.isSpeaking = true;
+    window.speechSynthesis.speak(utterance);
+    render();
+  }
+
+  function readAloudButton(text) {
+    if (!isSpeechSupported()) return null;
+    const listenLabel = t('Listen', 'Escuchar');
+    const stopLabel = t('Stop', 'Detener');
+    const label = state.isSpeaking ? stopLabel : listenLabel;
+    return el('button', {
+      type: 'button',
+      class: 'read-aloud-btn',
+      'aria-label': label,
+      'aria-pressed': state.isSpeaking ? 'true' : 'false',
+      onclick: (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (state.isSpeaking) {
+          stopSpeaking();
+          render();
+          return;
+        }
+        speak(text);
+      },
+    },
+      el('span', { class: 'read-aloud-icon', html: state.isSpeaking ? ICON_STOP : ICON_VOLUME }),
+      el('span', {}, label),
+    );
+  }
+
+  function speakOptionButton(label) {
+    if (!isSpeechSupported()) return null;
+    const trimmed = String(label || '').trim();
+    if (!trimmed) return null;
+    const aria = fillTemplate(
+      t('Listen to: {label}', 'Escuchar: {label}'),
+      { label: trimmed },
+    );
+    return el('button', {
+      type: 'button',
+      class: 'speak-option-btn',
+      'aria-label': aria,
+      onclick: (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        speak(trimmed);
+      },
+      onkeydown: (e) => {
+        // Keep Space/Enter from bubbling to parent role=button rows/cards.
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          speak(trimmed);
+        }
+      },
+    },
+      el('span', { class: 'speak-option-icon', html: ICON_VOLUME }),
+    );
+  }
+
+  function tapSpeakerTip() {
+    return t(
+      'Tap the speaker next to each choice to hear it, then tap the choice you feel.',
+      'Toca el altavoz junto a cada opción para oírla y luego toca la opción que sientes.',
+    );
+  }
+
   function setLanguage(lang) {
     if (lang !== 'en' && lang !== 'es') return;
+    stopSpeaking();
     state.language = lang;
     try {
       document.documentElement.setAttribute('lang', lang);
@@ -1170,6 +1310,25 @@
   function bodyPartDetailScreen() {
     const bp = state.currentBodyPart;
     const symptoms = D.bodyPartSymptoms[bp.key] || [];
+    const bpLabel = tLabel(bp);
+    const bodyPartListenText = symptoms.length === 0
+      ? fillTemplate(
+          t(
+            'You picked {bodyPart}. There are no symptoms to choose from right now.',
+            'Elegiste {bodyPart}. Ahora mismo no hay síntomas para elegir.',
+          ),
+          { bodyPart: bpLabel },
+        )
+      : joinSpokenSentences([
+          fillTemplate(
+            t(
+              'You picked {bodyPart}. Which of these do you feel?',
+              'Elegiste {bodyPart}. ¿Cuál de estos sientes?',
+            ),
+            { bodyPart: bpLabel },
+          ),
+          tapSpeakerTip(),
+        ]);
     const list = el('div', { class: 'symptom-list' },
       symptoms.map(name => {
         const selected = isSelected('body_parts', bp.key, name);
@@ -1187,7 +1346,8 @@
             }
           },
         },
-          el('span', {}, displayName),
+          el('span', { class: 'symptom-row-label' }, displayName),
+          speakOptionButton(displayName),
           el('span', { class: 'check', 'aria-hidden': 'true' }, selected ? '✓' : ''),
         );
       }),
@@ -1195,9 +1355,10 @@
 
     const detail = el('div', { class: 'bp-list-panel' },
       el('div', { class: 'panel-header' },
-        el('span', { class: 'panel-title' }, tLabel(bp)),
+        el('span', { class: 'panel-title' }, bpLabel),
         el('button', { class: 'panel-link', onclick: () => go('body-parts') }, t('← All Body Parts')),
       ),
+      readAloudButton(bodyPartListenText),
       el('img', { class: 'bp-detail-figure', src: D.assetPath('BodyParts-Final', bp.image), alt: '' }),
       el('button', { class: 'go-to-skin', onclick: () => go('body-part-detail', { currentBodyPart: D.bodyParts.find(b => b.key === 'skin') || bp }) }, t('Go To Skin')),
       list,
@@ -1268,6 +1429,25 @@
   function activityDetailScreen() {
     const act = state.currentActivity;
     const symptoms = D.activitySymptoms[act.key] || [];
+    const actLabel = tLabel(act);
+    const activityListenText = symptoms.length === 0
+      ? fillTemplate(
+          t(
+            'You picked {activity}. There are no symptoms to choose from right now.',
+            'Elegiste {activity}. Ahora mismo no hay síntomas para elegir.',
+          ),
+          { activity: actLabel },
+        )
+      : fillTemplate(
+          t(
+            'You picked {activity}. Which of these do you feel when {activityLower}? Tap the speaker next to each choice to hear it, then tap the choice you feel.',
+            'Elegiste {activity}. ¿Cuál de estos sientes cuando {activityLower}? Toca el altavoz junto a cada opción para oírla y luego toca la opción que sientes.',
+          ),
+          {
+            activity: actLabel,
+            activityLower: actLabel.toLowerCase(),
+          },
+        );
 
     const detailCard = el('div', {
       class: 'modal-card activity-modal',
@@ -1276,7 +1456,8 @@
       'aria-labelledby': 'activity-modal-title',
       onclick: (e) => e.stopPropagation(), // clicks inside the card don't dismiss
     },
-      el('h2', { id: 'activity-modal-title' }, tLabel(act)),
+      el('h2', { id: 'activity-modal-title' }, actLabel),
+      readAloudButton(activityListenText),
       el('img', {
         class: 'activity-modal-image',
         src: D.assetPath('activities', act.image),
@@ -1299,7 +1480,8 @@
               }
             },
           },
-            el('span', {}, displayName),
+            el('span', { class: 'symptom-row-label' }, displayName),
+            speakOptionButton(displayName),
             el('span', { class: 'check', 'aria-hidden': 'true' }, selected ? '✓' : ''),
           );
         }),
@@ -1338,20 +1520,25 @@
 
   // ---- Feelings (grid, click toggles directly)
   function feelingsScreen() {
+    const feelingsSubtitle = t('Pick the feelings where you are having problems');
+    const feelingsListenText = joinSpokenSentences([feelingsSubtitle, tapSpeakerTip()]);
     return el('div', {},
       siteHeader(),
       el('main', { class: 'site-main' },
         el('h1', { class: 'page-title' }, t('Feelings')),
-        el('p', { class: 'page-subtitle' }, t('Pick the feelings where you are having problems')),
+        el('p', { class: 'page-subtitle' }, feelingsSubtitle),
+        el('div', { class: 'read-aloud-row' }, readAloudButton(feelingsListenText)),
         el('div', { class: 'two-col' },
           el('div', { class: 'picker-grid picker-grid--feelings' },
             D.feelings.map(f => {
               const selected = isSelected('feelings', f.key, f.label);
+              const feelingLabel = tLabel(f);
               return el('div', {
                 class: 'picker-card feelings' + (selected ? ' is-selected' : ''),
                 onclick: () => toggleSymptom('feelings', f.key, 'Feelings', f.label),
               },
-                el('div', { class: 'top-label feelings-label' }, tLabel(f)),
+                el('div', { class: 'top-label feelings-label' }, feelingLabel),
+                speakOptionButton(feelingLabel),
                 el('img', { src: D.assetPath('Feelings-Final', f.image), alt: '' }),
                 el('div', { class: 'feelings-dots' },
                   el('span', {}), el('span', {}), el('span', {}),
@@ -1385,6 +1572,7 @@
       ? el('div', { class: 'search-results-pills' },
           results.map(it => {
             const selected = isSelected(it.category, it.subcategory, it.name);
+            const displayName = tSymptom(it.name);
             return el('div', {
               class: 'search-pill-row' + (selected ? ' is-selected' : ''),
               onclick: () => toggleSymptom(it.category, it.subcategory, it.contextLabel, it.name),
@@ -1397,7 +1585,8 @@
                 }
               },
             },
-              el('span', { class: 'search-pill-name' }, tSymptom(it.name)),
+              el('span', { class: 'search-pill-name' }, displayName),
+              speakOptionButton(displayName),
             );
           }),
         )
@@ -1414,16 +1603,25 @@
 
     // Add-as-new-symptom card: dashed border, query echoed in orange.
     // Only renders once the user has typed something.
+    const customQuery = rawQuery.trim();
     const addCustomCard = hasQuery ? el('div', { class: 'search-add-block' },
       el('p', { class: 'search-add-caption' }, t("Can't find what you are looking for? Click the add button:")),
-      el('button', {
-        class: 'search-add-card',
-        onclick: () => toggleSymptom('search', 'custom', 'Search', rawQuery.trim()),
-      },
-        el('div', { class: 'search-add-title' }, t('Add as a new symptom:')),
-        el('div', { class: 'search-add-query' }, `"${rawQuery.trim()}"`),
+      el('div', { class: 'search-add-card-wrap' },
+        el('button', {
+          class: 'search-add-card',
+          onclick: () => toggleSymptom('search', 'custom', 'Search', customQuery),
+        },
+          el('div', { class: 'search-add-title' }, t('Add as a new symptom:')),
+          el('div', { class: 'search-add-query' }, `"${customQuery}"`),
+        ),
+        speakOptionButton(customQuery),
       ),
     ) : null;
+
+    const searchResultsLabel = t('Please select from the list of symptoms :');
+    const searchListenText = hasResults
+      ? joinSpokenSentences([searchResultsLabel, tapSpeakerTip()])
+      : '';
 
     return el('div', {},
       siteHeader(),
@@ -1451,7 +1649,8 @@
               }, '×') : null,
               el('span', { class: 'search-icon-svg' + (hasQuery ? ' is-subtle' : ''), html: MAG_SVG }),
             ),
-            hasResults ? el('p', { class: 'search-results-label' }, t('Please select from the list of symptoms :')) : null,
+            hasResults ? el('p', { class: 'search-results-label' }, searchResultsLabel) : null,
+            hasResults ? el('div', { class: 'read-aloud-row' }, readAloudButton(searchListenText)) : null,
             resultsList,
             noMatchesNote,
             addCustomCard,
@@ -2561,6 +2760,7 @@
     function close() {
       // Closing the modal — add or edit — never sets `completedSession`.
       // Session completion happens in `logout()`.
+      stopSpeaking();
       state.pendingSymptom = null;
       state.editingSymptomId = null;
       state.questionStep = 0;
@@ -2568,6 +2768,7 @@
     }
 
     function next() {
+      stopSpeaking();
       if (step + 1 < totalSteps) { state.questionStep = step + 1; render(); }
       else if (isEditMode) {
         // Edit-mode "Done": same as Close — dismiss the modal.
@@ -2598,6 +2799,7 @@
       }
     }
     function back() {
+      stopSpeaking();
       if (step > 0) { state.questionStep = step - 1; render(); }
       // Add-mode: Back on step 0 acts as Cancel (closes the modal — the user
       // hasn't committed the new symptom yet). Edit-mode: Back on step 0 is
@@ -2638,7 +2840,8 @@
     // id isn't one of the three known ones — but in practice we only ever
     // see frequency/severity/interference here.
     let promptText;
-    const symLower = tSymptom(sym.name).toLowerCase();
+    const symDisplay = tSymptom(sym.name);
+    const symLower = symDisplay.toLowerCase();
     if (q.id === 'frequency') promptText = t(
       `In the past 7 days, how often did you have ${symLower}?`,
       `En los últimos 7 días, ¿con qué frecuencia tuviste ${symLower}?`
@@ -2653,6 +2856,17 @@
     );
     else promptText = q.prompt;
 
+    const questionListenText = joinSpokenSentences([
+      fillTemplate(
+        t(
+          'You clicked {symptomLower}. {question}',
+          'Tocaste {symptomLower}. {question}',
+        ),
+        { symptom: symDisplay, symptomLower: symLower, question: promptText },
+      ),
+      tapSpeakerTip(),
+    ]);
+
     return el('div', { class: 'modal-backdrop', onclick: (e) => { if (e.target.classList.contains('modal-backdrop')) close(); } },
       el('div', {
         class: 'modal-card',
@@ -2660,20 +2874,28 @@
         'aria-modal': 'true',
         'aria-labelledby': 'q-modal-title',
       },
-        el('h2', { id: 'q-modal-title' }, tSymptom(sym.name)),
+        el('h2', { id: 'q-modal-title' }, symDisplay),
+        el('div', { class: 'read-aloud-row' }, readAloudButton(questionListenText)),
         el('div', { class: 'q-prompt', id: 'q-modal-prompt' }, promptText),
         el('div', {
           class: 'rating-col',
           role: 'radiogroup',
           'aria-labelledby': 'q-modal-prompt',
         },
-          q.options.map(opt => el('button', {
-            class: 'rating-btn' + (current === opt.value ? ' is-selected' : ''),
-            role: 'radio',
-            'aria-checked': current === opt.value ? 'true' : 'false',
-            'data-level': String(Math.min(opt.value, 3)),
-            onclick: () => setAnswer(opt.value),
-          }, tOption(opt.label))),
+          q.options.map(opt => {
+            const optLabel = tOption(opt.label);
+            return el('div', { class: 'rating-option' },
+              el('button', {
+                type: 'button',
+                class: 'rating-btn' + (current === opt.value ? ' is-selected' : ''),
+                role: 'radio',
+                'aria-checked': current === opt.value ? 'true' : 'false',
+                'data-level': String(Math.min(opt.value, 3)),
+                onclick: () => setAnswer(opt.value),
+              }, optLabel),
+              speakOptionButton(optLabel),
+            );
+          }),
         ),
         // Progress dots reflect the per-symptom step count — 2 for feelings,
         // 3 otherwise. Earlier versions hard-coded 3 dots regardless.

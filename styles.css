@@ -996,7 +996,9 @@ body.modal-open {
   display: flex; flex-direction: column; gap: 10px;
 }
 .symptom-row {
+  position: relative;
   display: flex; align-items: center; justify-content: space-between;
+  gap: 8px;
   padding: 12px 16px;
   border: 1.5px solid var(--spots-orange);
   border-radius: 10px;
@@ -1013,8 +1015,14 @@ body.modal-open {
   outline: 2px solid var(--spots-blue);
   outline-offset: -1px;
 }
+.symptom-row-label {
+  flex: 1;
+  min-width: 0;
+  padding-right: 4px;
+}
 .symptom-row .check {
   width: 22px; height: 22px;
+  flex-shrink: 0;
   border: 2px solid var(--spots-blue);
   border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
@@ -1023,6 +1031,124 @@ body.modal-open {
   font-size: 13px;
 }
 .symptom-row.is-selected .check { background: var(--spots-blue); }
+
+/* Read aloud (Listen) + per-choice speaker — mirrors spots-app speech buttons */
+.read-aloud-row {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 12px;
+}
+.bp-list-panel > .read-aloud-btn,
+.activity-modal > .read-aloud-btn {
+  display: inline-flex;
+  margin: 0 auto 12px;
+}
+.read-aloud-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1.5px solid var(--spots-blue);
+  border-radius: 999px;
+  background: white;
+  color: var(--spots-blue-dark);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1.2;
+}
+.read-aloud-btn:hover { background: var(--spots-blue-soft); }
+.read-aloud-btn:focus-visible {
+  outline: 2px solid var(--spots-blue-dark);
+  outline-offset: 2px;
+}
+.read-aloud-btn[aria-pressed="true"] {
+  background: var(--spots-blue-soft);
+}
+.read-aloud-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+.speak-option-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--spots-blue-dark);
+  cursor: pointer;
+}
+.speak-option-btn:hover { background: rgba(6, 83, 149, 0.08); }
+.speak-option-btn:focus-visible {
+  outline: 2px solid var(--spots-blue);
+  outline-offset: 2px;
+}
+.speak-option-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.picker-card.feelings .speak-option-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.picker-card.feelings .feelings-label {
+  padding-right: 40px;
+}
+.search-add-card-wrap {
+  position: relative;
+}
+.search-add-card-wrap .speak-option-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.95);
+}
+.search-add-card-wrap .search-add-card {
+  width: 100%;
+  padding-right: 48px;
+}
+.rating-option {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+}
+.rating-option .rating-btn {
+  width: 100%;
+  margin: 0;
+  padding-right: 44px;
+}
+.rating-option .speak-option-btn {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  color: inherit;
+}
+.rating-option .rating-btn[data-level="1"] ~ .speak-option-btn,
+.rating-option .rating-btn[data-level="2"] ~ .speak-option-btn,
+.rating-option .rating-btn[data-level="3"] ~ .speak-option-btn {
+  color: white;
+}
+.rating-option .rating-btn.is-selected ~ .speak-option-btn {
+  color: var(--spots-blue-dark);
+}
 
 /* =================================================================== */
 /* PAST PROBLEMS LIST (2-col)                                            */
@@ -1198,8 +1324,9 @@ body.modal-open {
   display: flex; flex-direction: column; gap: 10px;
 }
 .search-pill-row {
+  position: relative;
   display: flex; align-items: center; justify-content: flex-start;
-  padding: 14px 22px;
+  padding: 14px 52px 14px 22px;
   border: 1.5px solid var(--spots-orange);
   border-radius: 999px;
   background: white;
@@ -1214,6 +1341,12 @@ body.modal-open {
 .search-pill-row.is-selected {
   background: var(--spots-blue-soft);
   border-color: var(--spots-blue);
+}
+.search-pill-row .speak-option-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
 }
 .search-pill-name {
   font-weight: 700;
