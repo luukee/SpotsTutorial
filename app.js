@@ -1482,7 +1482,6 @@
           },
             el('span', { class: 'symptom-row-label' }, displayName),
             speakOptionButton(displayName),
-            el('span', { class: 'check', 'aria-hidden': 'true' }, selected ? '✓' : ''),
           );
         }),
       ),
