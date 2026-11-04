@@ -916,8 +916,11 @@ body.modal-open {
   display: flex;
   flex-direction: column;
 }
-.bp-list-panel .bp-list {
+.bp-list-panel .bp-list,
+.bp-list-panel .symptom-list {
   overflow-y: auto;
+  flex: 1;
+  min-height: 0;
   padding-right: 4px;
 }
 /* Body Parts main list (no panel header) — thin divider sits above the rows
@@ -1020,17 +1023,6 @@ body.modal-open {
   min-width: 0;
   padding-right: 4px;
 }
-.symptom-row .check {
-  width: 22px; height: 22px;
-  flex-shrink: 0;
-  border: 2px solid var(--spots-blue);
-  border-radius: 50%;
-  display: inline-flex; align-items: center; justify-content: center;
-  background: white;
-  color: white;
-  font-size: 13px;
-}
-.symptom-row.is-selected .check { background: var(--spots-blue); }
 
 /* Read aloud (Listen) + per-choice speaker — mirrors spots-app speech buttons */
 .read-aloud-row {
