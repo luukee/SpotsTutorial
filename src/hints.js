@@ -13,6 +13,13 @@ import { siteHeader, logoCorner, navButton } from './shell/header.js';
 import { siteFooter } from './shell/footer.js';
 import { problemStation } from './shell/problem-station.js';
 
+// Reusable cursor SVG (white-fill black-stroke pointer) for walkthrough demos.
+const HINT_CURSOR_SVG =
+  '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+  '<path d="M3 2 L3 19 L8 14.5 L11 21 L14 19.5 L11 13 L18 13 Z" ' +
+  'fill="#ffffff" stroke="#101828" stroke-width="1.4" stroke-linejoin="round"/>' +
+  '</svg>';
+
 export function hintMiniHeader(concreteKey, extras, opts) {
   const concreteAvatar = !!(opts && opts.concreteAvatar);
   const SLOTS = [
