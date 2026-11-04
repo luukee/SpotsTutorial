@@ -7,7 +7,7 @@
 // via AWS Lambda; see app/api/symptoms/templates/route.ts), so the per-subcategory
 // lists below mix the authoritative seed terms from mock-symptoms-data.ts with
 // pediatric-friendly fallbacks for subcategories REDCap normally fills in.
-window.SPOTS_DATA = (function () {
+export const D = (function () {
 
   // ---------- Body parts ----------
   // key matches body-part-symptom-service.ts BODY_PART_TO_SUBCATEGORY values,
@@ -215,6 +215,6 @@ window.SPOTS_DATA = (function () {
     redcapSymptoms,
     searchCorpus: buildSearchCorpus(),
     ratingQuestions,
-    assetPath(folder, file) { return `./assets/${folder}/${file}`; },
+    assetPath(folder, file) { return `/assets/${folder}/${file}`; },
   };
 })();
