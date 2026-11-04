@@ -324,8 +324,3 @@ export function tutorialCompleteScreen() {
     siteFooter(),
   );
 }
-
-// ----------------------------- body SVG hotspots -----------------------------
-// Mirrors InteractiveBody.tsx in spots-app-main: load the SVG inline so we can
-// attach click + hover handlers to each .body-part group.
-const bodySvgCache = {};

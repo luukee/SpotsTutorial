@@ -163,7 +163,10 @@ export function bodyPartDetailScreen() {
   );
 }
 
-// ---- Activities (grid)
+// ----------------------------- body SVG hotspots -----------------------------
+// Mirrors InteractiveBody.tsx in spots-app: load the SVG inline so we can
+// attach click + hover handlers to each .body-part group.
+const bodySvgCache = {};
 
 export function loadAndWireBodySvgs() {
   const containers = document.querySelectorAll('.body-svg[data-svg-src]:not([data-wired])');
@@ -257,10 +260,3 @@ export function wireBodyHotspots(svg) {
     head.addEventListener('mouseleave', () => svg.classList.remove('head-hover'));
   }
 }
-
-// ----------------------------- router -----------------------------
-// Tracks whether the previous render had a modal open. Used to fire the
-// scroll-preserve/restore exactly once per modal-open / modal-close
-// transition (not every render — re-renders during modal-open shouldn't
-// re-capture the scroll position).
-let lastModalOpen = false;
