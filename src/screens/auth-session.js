@@ -41,6 +41,14 @@ export function introModal() {
     }),
   );
 
+  const progressCorner = window.matchMedia('(max-width: 1023px)').matches ? 'bottom' : 'top';
+  const progressTip = progressCorner === 'bottom'
+    ? 'Your <strong>Practice Guide Progress</strong> is in the bottom-right corner. Click it anytime to view your steps.'
+    : 'Your <strong>Practice Guide Progress</strong> is in the top-right corner. Click it anytime to view your steps.';
+  const progressTipEs = progressCorner === 'bottom'
+    ? 'Tu <strong>Progreso de la guía de práctica</strong> está en la esquina inferior derecha. Haz clic cuando quieras para ver tus pasos.'
+    : 'Tu <strong>Progreso de la guía de práctica</strong> está en la esquina superior derecha. Haz clic cuando quieras para ver tus pasos.';
+
   return el('div', {
     class: 'modal-backdrop intro-backdrop',
     onclick: (e) => { if (e.target.classList.contains('modal-backdrop')) dismiss(); },
@@ -56,10 +64,7 @@ export function introModal() {
       el('div', { class: 'intro-rows' },
         el('div', { class: 'intro-row' },
           dockMini,
-          el('p', { html: t(
-            'Your <strong>Practice Guide Progress</strong> is in the top-right corner. Click it anytime to view your steps.',
-            'Tu <strong>Progreso de la guía de práctica</strong> está en la esquina superior derecha. Haz clic cuando quieras para ver tus pasos.',
-          ) }),
+          el('p', { html: t(progressTip, progressTipEs) }),
         ),
         el('div', { class: 'intro-row' },
           el('span', { class: 'intro-hint-badge', 'aria-hidden': 'true' }, '?'),

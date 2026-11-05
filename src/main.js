@@ -56,12 +56,16 @@ document.addEventListener('keydown', (e) => {
 
 // The phone bar only exists under 1024px. If the window grows past that
 // while a panel is open, drop the panel so the wide header isn't a dialog.
+// The welcome tip also names a different corner on each side of this breakpoint.
 window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
-  if (!e.matches) return;
-  if (!state.mobileMenuOpen && !state.problemStationOpen) return;
-  state.mobileMenuOpen = false;
-  state.problemStationOpen = false;
-  render();
+  const introOpen = !state.introDismissed && state.session === 1 && state.screen === 'home';
+  let changed = introOpen;
+  if (e.matches && (state.mobileMenuOpen || state.problemStationOpen)) {
+    state.mobileMenuOpen = false;
+    state.problemStationOpen = false;
+    changed = true;
+  }
+  if (changed) render();
 });
 
 document.addEventListener('click', () => {
