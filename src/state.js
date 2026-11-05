@@ -39,6 +39,9 @@ export const state = {
   // Small-screen header (under 1024px). The wide icon row stays in place
   // above that width; these flags only drive the phone bar.
   mobileMenuOpen: false,
+  // Phone menu only: the "finish these steps" list stays hidden until a
+  // tap on the locked Logout button.
+  mobileLogoutHint: false,
   problemStationOpen: false,
   // Which "not in this tutorial" notice is up: null, 'report', or 'settings'.
   unavailableNotice: null,

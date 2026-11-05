@@ -228,8 +228,16 @@ function problemStationButton(open) {
 }
 
 function mobileDrawer(activeKey, action) {
-  if (!state.mobileMenuOpen) return null;
-  const reason = action.actionDisabled ? el('div', { class: 'mobile-logout-reason' },
+  if (!state.mobileMenuOpen) {
+    state.mobileLogoutHint = false;
+    return null;
+  }
+  const showLogoutHint = action.actionDisabled && state.mobileLogoutHint;
+  const reason = showLogoutHint ? el('div', {
+    id: 'mobile-logout-reason',
+    class: 'mobile-logout-reason',
+    role: 'status',
+  },
     el('div', { class: 'mobile-logout-reason-title' }, t('Finish these steps to log out:')),
     el('ul', {},
       ...action.remainingItems.map(i => el('li', {}, i.label)),
@@ -270,10 +278,19 @@ function mobileDrawer(activeKey, action) {
       }, t('Settings')),
       action.isTerminal ? null : el('button', {
         type: 'button',
+        id: 'mobile-logout',
         class: 'mobile-account-btn' + (action.actionDisabled ? ' is-disabled' : ''),
         title: action.actionTitle,
         'aria-disabled': action.actionDisabled ? 'true' : 'false',
-        onclick: () => runAccountAction(action),
+        'aria-describedby': showLogoutHint ? 'mobile-logout-reason' : null,
+        onclick: () => {
+          if (action.actionDisabled) {
+            state.mobileLogoutHint = true;
+            render();
+            return;
+          }
+          runAccountAction(action);
+        },
       }, action.actionLabel),
       reason,
     ),

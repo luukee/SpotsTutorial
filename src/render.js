@@ -135,7 +135,8 @@ export function render() {
   const dialogs = root.querySelectorAll('[role="dialog"]');
   const topDialog = dialogs[dialogs.length - 1];
   if (topDialog && !topDialog.contains(document.activeElement)) {
-    const firstFocusable = topDialog.querySelector(FOCUSABLE_SELECTOR);
+    const logoutHint = state.mobileLogoutHint && document.getElementById('mobile-logout');
+    const firstFocusable = logoutHint || topDialog.querySelector(FOCUSABLE_SELECTOR);
     if (firstFocusable) firstFocusable.focus();
   } else if (!topDialog && state.focusReturnId) {
     const returnEl = document.getElementById(state.focusReturnId);
