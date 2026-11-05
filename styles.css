@@ -1925,6 +1925,40 @@ body.modal-open {
   margin-top: 18px;
 }
 
+.notice-card {
+  width: 440px;
+}
+.notice-card > h2 {
+  padding: 0 36px;
+}
+.notice-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--spots-blue-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.notice-close svg { width: 20px; height: 20px; }
+.notice-close:focus-visible {
+  outline: 2px solid var(--spots-blue);
+  outline-offset: 2px;
+}
+.notice-body {
+  text-align: center;
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--spots-text);
+}
+
 .hint-card {
   width: 600px;
   max-width: 100%;
@@ -4625,39 +4659,6 @@ select:focus-visible,
 /* Narrow viewports — tablets in portrait, small laptops, the production  */
 /* site's mobile breakpoint                                              */
 @media (max-width: 768px) {
-  .site-header {
-    flex-wrap: wrap;
-    padding: 8px 16px 8px 16px;
-    min-height: 0;
-    gap: 8px;
-  }
-  /* Demote the corner banner to a small inline logo. It's an absolute   */
-  /* element so it can't reflow — shrink + reposition.                  */
-  .logo-corner {
-    position: static;
-    width: auto; height: auto;
-    display: flex;
-    align-items: center;
-  }
-  .logo-corner .curve, .logo-corner .confetti { display: none; }
-  .logo-corner .word-logo {
-    position: static;
-    width: 130px; height: auto;
-    margin: 0;
-  }
-  .top-nav {
-    order: 3;
-    flex-basis: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 6px 10px;
-  }
-  .nav-item .label { font-size: 11px; }
-  .nav-icon { width: 56px; height: 56px; }
-  .user-area { margin-left: auto; }
-  .icon-btn.settings-btn, .icon-btn.avatar-btn { width: 56px; height: 56px; }
-  .avatar-btn img { width: 56px; height: 56px; }
-
   /* Main content padding */
   .site-main { padding: 10px 16px 24px; }
 
@@ -4693,10 +4694,207 @@ select:focus-visible,
 @media (max-width: 480px) {
   .picker-grid--activities,
   .picker-grid--feelings { grid-template-columns: 1fr; }
-  .nav-icon { width: 48px; height: 48px; }
-  .icon-btn.settings-btn, .icon-btn.avatar-btn { width: 48px; height: 48px; }
-  .avatar-btn img { width: 48px; height: 48px; }
   .hint-stage { transform: scale(0.7); }
+}
+
+/* Phone / tablet header. Hidden on wide screens, where the icon row stays. */
+.mobile-header-bar,
+.mobile-drawer,
+.mobile-ps-panel,
+.mobile-backdrop {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    height: 64px;
+    min-height: 64px;
+    padding: 0 12px 0 16px;
+    gap: 0;
+    background: #0277a8;
+  }
+  .logo-corner,
+  .top-nav,
+  .user-area {
+    display: none;
+  }
+  .mobile-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 64px;
+  }
+  .mobile-logo {
+    order: -1;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  .mobile-logo img {
+    height: 40px;
+    width: auto;
+  }
+  .mobile-logo:focus-visible,
+  .mobile-icon-btn:focus-visible,
+  .mobile-nav-item:focus-visible,
+  .mobile-account-btn:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+  .mobile-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+  }
+  .mobile-icon-btn {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .mobile-icon-btn img,
+  .mobile-icon-svg,
+  .mobile-icon-svg svg {
+    width: 24px;
+    height: 24px;
+  }
+  .mobile-icon-svg { display: flex; }
+  .ps-count-badge {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #fff;
+    color: #1a1c20;
+    border: 1px solid #d0d5dd;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.1rem;
+    text-align: center;
+  }
+  .mobile-backdrop {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 64px;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 65;
+  }
+  .mobile-drawer,
+  .mobile-ps-panel {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 64px;
+    z-index: 70;
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-drawer {
+    background: #0277a8;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 8px max(12px, env(safe-area-inset-bottom));
+  }
+  .mobile-nav-item,
+  .mobile-account-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .mobile-nav-item img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+  .mobile-nav-item.is-active,
+  .mobile-nav-item:hover,
+  .mobile-account-btn:hover {
+    background: rgba(0, 30, 80, 0.2);
+  }
+  .mobile-account {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    padding: 0 8px;
+  }
+  .mobile-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    background: var(--spots-blue-soft);
+  }
+  .mobile-avatar img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .mobile-account-btn.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .mobile-logout-reason {
+    width: 100%;
+    max-width: 320px;
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    text-align: left;
+  }
+  .mobile-logout-reason-title { font-weight: 700; margin-bottom: 4px; }
+  .mobile-logout-reason ul { margin: 0; padding-left: 18px; }
+  .mobile-reporting-status {
+    margin: 12px 8px 0;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 12px;
+  }
+  .mobile-reporting-status strong { color: #fff; }
+  .mobile-ps-panel {
+    background: #fff;
+    padding: 16px;
+  }
+  .mobile-ps-panel .problem-station { position: static; }
+  .two-col > .problem-station { display: none; }
+  .tutorial-dock { top: auto; bottom: 16px; right: 16px; }
+  .tutorial-dock-panel { right: 0; max-width: calc(100vw - 32px); }
 }
 
 /* =================================================================== */

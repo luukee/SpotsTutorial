@@ -9,7 +9,7 @@ import { render } from '../render-ref.js';
 import { readAloudButton, speakOptionButton, tapSpeakerTip, stopSpeaking } from '../speech.js';
 import { categoryLabelFor, formatDateMDY } from '../utils.js';
 
-import { siteHeader } from '../shell/header.js';
+import { siteHeader, openUnavailableNotice } from '../shell/header.js';
 import { siteFooter } from '../shell/footer.js';
 import { problemStation } from '../shell/problem-station.js';
 
@@ -236,10 +236,12 @@ export function homeScreen() {
             hasData ? summaryChartLegend() : null,
             !hasData ? el('p', { class: 'dash-summary-empty' }, t('There are no symptoms reported. Use the other tools to tell us about your problems, then come back here next time.')) : null,
             el('a', {
+              id: 'view-full-report',
               class: 'view-full',
+              href: '#report',
               onclick: (e) => {
                 e.preventDefault();
-                alert(t('Reports are part of the full SPOTS site. This tutorial build focuses on the symptom-reporting flow and does not include the reporting view.'));
+                openUnavailableNotice('report', 'view-full-report');
               },
             }, t('View Full Report →')),
           ),

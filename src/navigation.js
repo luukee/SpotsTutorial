@@ -16,9 +16,13 @@ export function go(screen, opts = {}) {
   if (screen === 'past-problems' && state.session !== 2) {
     state.tutorialFlags.viewedPastProblems = true;
   }
-  // Any route change closes the account dropdown so it doesn't persist
-  // visually onto a new screen.
+  // Any route change closes the account dropdown and the small-screen
+  // overlays so they don't persist onto a new screen.
   state.userMenuOpen = false;
+  state.mobileMenuOpen = false;
+  state.problemStationOpen = false;
+  state.unavailableNotice = null;
+  state.focusReturnId = null;
   // `usedSearch` is intentionally NOT set on entering the search screen;
   // it flips to true only after a search-originated symptom is finalized
   // (see the question-modal `next()` finalize path).
