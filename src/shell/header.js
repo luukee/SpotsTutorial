@@ -212,7 +212,6 @@ function problemStationButton(open) {
     'aria-label': label,
     'aria-expanded': open ? 'true' : 'false',
     'aria-controls': 'problem-station-panel',
-    inert: state.mobileMenuOpen ? '' : null,
     onclick: (e) => {
       e.stopPropagation();
       toggleProblemStation();
