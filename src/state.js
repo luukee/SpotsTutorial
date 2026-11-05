@@ -36,6 +36,18 @@ export const state = {
   // Account dropdown (top-right header). Click avatar to toggle; click
   // outside or Esc to close. See userMenu() / logout().
   userMenuOpen: false,
+  // Small-screen header (under 1024px). The wide icon row stays in place
+  // above that width; these flags only drive the phone bar.
+  mobileMenuOpen: false,
+  // Phone menu only: the "finish these steps" list stays hidden until a
+  // tap on the locked Logout button.
+  mobileLogoutHint: false,
+  problemStationOpen: false,
+  // Which "not in this tutorial" notice is up: null, 'report', or 'settings'.
+  unavailableNotice: null,
+  // Element id to focus after the phone menu, Problem Station panel, or
+  // notice modal closes. Cleared once focus is moved.
+  focusReturnId: null,
   // Tracks which tutorial session we're in. 1 = first session,
   // 2 = after logout/login. Past-problems archive carries across sessions
   // but the in-progress `selected` list does not.

@@ -21,6 +21,7 @@ import {
   loadAndWireBodySvgs,
 } from './screens/index.js';
 import { hintModal } from './hints.js';
+import { unavailableNoticeModal } from './shell/header.js';
 
 const root = document.getElementById('app');
 
@@ -98,6 +99,8 @@ export function render() {
   if (intro) root.appendChild(intro);
   const loginPrompt = loginPromptModal();
   if (loginPrompt) root.appendChild(loginPrompt);
+  const notice = unavailableNoticeModal();
+  if (notice) root.appendChild(notice);
 
   // Lock body scroll while a modal is open so the page-behind doesn't
   // scroll on iOS / Android. `activity-detail` renders its own overlay
@@ -111,6 +114,7 @@ export function render() {
     || state.screen === 'activity-detail'
     || introOpen
     || loginPromptOpen
+    || state.unavailableNotice
   );
   applyModalScrollLock(isModalOpen);
 
@@ -131,8 +135,28 @@ export function render() {
   const dialogs = root.querySelectorAll('[role="dialog"]');
   const topDialog = dialogs[dialogs.length - 1];
   if (topDialog && !topDialog.contains(document.activeElement)) {
-    const firstFocusable = topDialog.querySelector(FOCUSABLE_SELECTOR);
+    const logoutHint = state.mobileLogoutHint && document.getElementById('mobile-logout');
+    const firstFocusable = logoutHint || topDialog.querySelector(FOCUSABLE_SELECTOR);
     if (firstFocusable) firstFocusable.focus();
+  } else if (!topDialog && state.focusReturnId) {
+    const returnEl = document.getElementById(state.focusReturnId);
+    state.focusReturnId = null;
+    if (returnEl) returnEl.focus();
+  }
+
+  // Keep the page behind the phone menu or Problem Station panel out of
+  // the tab order. The header itself is the dialog, so it stays reachable.
+  const narrow = window.matchMedia('(max-width: 1023px)').matches;
+  if (narrow && (state.mobileMenuOpen || state.problemStationOpen)) {
+    const header = root.querySelector('.site-header');
+    const view = header && header.parentElement;
+    if (view) {
+      Array.from(view.children).forEach((node) => {
+        if (node !== header) node.setAttribute('inert', '');
+      });
+    }
+    const dock = root.querySelector('.tutorial-dock');
+    if (dock) dock.setAttribute('inert', '');
   }
 }
 

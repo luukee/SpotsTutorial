@@ -39,10 +39,33 @@ document.addEventListener('keydown', (e) => {
   } else if (!state.loginPromptDismissed && state.screen === 'login') {
     state.loginPromptDismissed = true;
     render();
+  } else if (state.unavailableNotice) {
+    state.unavailableNotice = null;
+    render();
+  } else if (state.mobileMenuOpen) {
+    state.mobileMenuOpen = false;
+    render();
+  } else if (state.problemStationOpen) {
+    state.problemStationOpen = false;
+    render();
   } else if (state.userMenuOpen) {
     state.userMenuOpen = false;
     render();
   }
+});
+
+// The phone bar only exists under 1024px. If the window grows past that
+// while a panel is open, drop the panel so the wide header isn't a dialog.
+// The welcome tip also names a different corner on each side of this breakpoint.
+window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+  const introOpen = !state.introDismissed && state.session === 1 && state.screen === 'home';
+  let changed = introOpen;
+  if (e.matches && (state.mobileMenuOpen || state.problemStationOpen)) {
+    state.mobileMenuOpen = false;
+    state.problemStationOpen = false;
+    changed = true;
+  }
+  if (changed) render();
 });
 
 document.addEventListener('click', () => {
