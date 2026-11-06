@@ -96,10 +96,10 @@ img { display: block; }
   position: relative;
 }
 
-/* Body lock applied during a modal-open render — see render() in app.js.
+/* Body lock applied during a modal-open render — see applyModalScrollLock.
    Stops the page-behind from scrolling under question/hint/activity modals
-   on iOS (and elsewhere). `--scroll-y` is set in JS to restore position on
-   close. */
+   on iOS (and elsewhere). JS updates this rule's `top` through the stylesheet
+   (not an inline style) so a strict Content-Security-Policy can stay in place. */
 body.modal-open {
   position: fixed;
   inset: 0 0 auto 0;
@@ -840,6 +840,7 @@ body.modal-open {
 .body-svg .body-part {
   transition: filter 120ms ease;
   outline: none;
+  cursor: pointer;
 }
 .body-svg .body-part:focus-visible {
   filter: drop-shadow(0 0 4px var(--spots-blue));
@@ -4490,6 +4491,15 @@ img.hint-mini-corner {
 .login-section .login-pw-toggle svg {
   width: 20px;
   height: 20px;
+}
+.login-section .login-pw-toggle .eye-closed {
+  display: none;
+}
+.login-section .login-pw-toggle.is-revealed .eye-open {
+  display: none;
+}
+.login-section .login-pw-toggle.is-revealed .eye-closed {
+  display: inline;
 }
 .login-section .login-btn {
   width: 100%;

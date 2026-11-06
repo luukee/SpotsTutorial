@@ -37,6 +37,29 @@ export function isEmbeddedFrame() {
   }
 }
 
+const MODAL_SCROLL_TOP = 'var(--scroll-y, 0)';
+
+/** The modal-lock rule in styles.css. Updated in the stylesheet so CSP can forbid inline styles. */
+function modalOpenStyleRule() {
+  for (const sheet of document.styleSheets) {
+    let rules;
+    try {
+      rules = sheet.cssRules;
+    } catch {
+      continue;
+    }
+    for (const rule of rules) {
+      if (rule.selectorText === 'body.modal-open') return rule;
+    }
+  }
+  return null;
+}
+
+function setModalScrollTop(value) {
+  const rule = modalOpenStyleRule();
+  if (rule) rule.style.top = value;
+}
+
 export function applyModalScrollLock(isOpen) {
   // Inside the spots-app TutorialModal iframe, locking html/body hides
   // the only usable scrollbar (the iframe). Overlay cards scroll themselves.
@@ -47,7 +70,7 @@ export function applyModalScrollLock(isOpen) {
   if (isOpen && !lastModalOpen) {
     // Modal just opened — capture current scroll so we can restore it.
     const y = window.scrollY || window.pageYOffset || 0;
-    document.body.style.setProperty('--scroll-y', `-${y}px`);
+    setModalScrollTop(`-${y}px`);
     document.body.dataset.scrollY = String(y);
     document.body.classList.add('modal-open');
   } else if (!isOpen && lastModalOpen) {
@@ -55,7 +78,7 @@ export function applyModalScrollLock(isOpen) {
     // since clearing `position: fixed` snaps the page to top on iOS.
     const y = parseInt(document.body.dataset.scrollY || '0', 10);
     document.body.classList.remove('modal-open');
-    document.body.style.removeProperty('--scroll-y');
+    setModalScrollTop(MODAL_SCROLL_TOP);
     delete document.body.dataset.scrollY;
     window.scrollTo(0, y);
   }

@@ -133,8 +133,7 @@ export function loginScreen() {
     const showing = input.type === 'text';
     input.type = showing ? 'password' : 'text';
     e.currentTarget.setAttribute('aria-label', showing ? t('Show password') : t('Hide password'));
-    e.currentTarget.querySelector('.eye-open').style.display = showing ? 'inline' : 'none';
-    e.currentTarget.querySelector('.eye-closed').style.display = showing ? 'none' : 'inline';
+    e.currentTarget.classList.toggle('is-revealed', !showing);
   };
 
   const googleSvg =
@@ -150,7 +149,7 @@ export function loginScreen() {
     '<path fill="currentColor" d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/>' +
     '</svg>';
   const eyeClosedSvg =
-    '<svg class="eye-closed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" style="display:none">' +
+    '<svg class="eye-closed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">' +
     '<path fill="currentColor" d="M2 4.27l1.41-1.41L20.73 20.18l-1.41 1.41-2.65-2.65A11.3 11.3 0 0 1 12 19c-7 0-11-7-11-7a18.4 18.4 0 0 1 4.66-5.4L2 4.27zM12 9a3 3 0 0 1 3 3c0 .35-.06.68-.18.99l-3.81-3.81c.31-.12.64-.18.99-.18zm0-4c7 0 11 7 11 7a18.5 18.5 0 0 1-3.04 4.04l-2.06-2.06A6 6 0 0 0 12 7c-.34 0-.67.04-.99.1L9.45 5.55C10.27 5.2 11.12 5 12 5z"/>' +
     '</svg>';
 
