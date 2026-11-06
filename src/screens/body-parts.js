@@ -237,7 +237,6 @@ export function wireBodyHotspots(svg) {
     const bp = D.bodyParts.find(b => b.key === partKey);
     if (!bp) return;
     if (ZONE_PARTS.has(partKey)) ensureHotspotZone(g);
-    g.style.cursor = 'pointer';
     g.setAttribute('tabindex', '0');
     g.setAttribute('role', 'button');
     g.setAttribute('aria-label', tLabel(bp));
