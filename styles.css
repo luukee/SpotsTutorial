@@ -4716,7 +4716,7 @@ select:focus-visible,
 }
 
 @media (max-width: 1023px) {
-  .site-header {
+  html:not(.embed-desktop) .site-header {
     position: sticky;
     top: 0;
     z-index: 80;
@@ -4726,19 +4726,19 @@ select:focus-visible,
     gap: 0;
     background: #0277a8;
   }
-  .logo-corner,
-  .top-nav,
-  .user-area {
+  html:not(.embed-desktop) .logo-corner,
+  html:not(.embed-desktop) .top-nav,
+  html:not(.embed-desktop) .user-area {
     display: none;
   }
-  .mobile-header-bar {
+  html:not(.embed-desktop) .mobile-header-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     height: 64px;
   }
-  .mobile-logo {
+  html:not(.embed-desktop) .mobile-logo {
     order: -1;
     background: none;
     border: none;
@@ -4746,24 +4746,24 @@ select:focus-visible,
     display: flex;
     align-items: center;
   }
-  .mobile-logo img {
+  html:not(.embed-desktop) .mobile-logo img {
     height: 40px;
     width: auto;
   }
-  .mobile-logo:focus-visible,
-  .mobile-icon-btn:focus-visible,
-  .mobile-nav-item:focus-visible,
-  .mobile-account-btn:focus-visible {
+  html:not(.embed-desktop) .mobile-logo:focus-visible,
+  html:not(.embed-desktop) .mobile-icon-btn:focus-visible,
+  html:not(.embed-desktop) .mobile-nav-item:focus-visible,
+  html:not(.embed-desktop) .mobile-account-btn:focus-visible {
     outline: 2px solid #fff;
     outline-offset: 2px;
   }
-  .mobile-header-actions {
+  html:not(.embed-desktop) .mobile-header-actions {
     display: flex;
     align-items: center;
     gap: 4px;
     margin-left: auto;
   }
-  .mobile-icon-btn {
+  html:not(.embed-desktop) .mobile-icon-btn {
     position: relative;
     width: 44px;
     height: 44px;
@@ -4776,14 +4776,14 @@ select:focus-visible,
     justify-content: center;
     padding: 0;
   }
-  .mobile-icon-btn img,
-  .mobile-icon-svg,
-  .mobile-icon-svg svg {
+  html:not(.embed-desktop) .mobile-icon-btn img,
+  html:not(.embed-desktop) .mobile-icon-svg,
+  html:not(.embed-desktop) .mobile-icon-svg svg {
     width: 24px;
     height: 24px;
   }
-  .mobile-icon-svg { display: flex; }
-  .ps-count-badge {
+  html:not(.embed-desktop) .mobile-icon-svg { display: flex; }
+  html:not(.embed-desktop) .ps-count-badge {
     position: absolute;
     top: 2px;
     right: 0;
@@ -4799,7 +4799,7 @@ select:focus-visible,
     line-height: 1.1rem;
     text-align: center;
   }
-  .mobile-backdrop {
+  html:not(.embed-desktop) .mobile-backdrop {
     display: block;
     position: fixed;
     left: 0;
@@ -4809,8 +4809,8 @@ select:focus-visible,
     background: rgba(0, 0, 0, 0.5);
     z-index: 65;
   }
-  .mobile-drawer,
-  .mobile-ps-panel {
+  html:not(.embed-desktop) .mobile-drawer,
+  html:not(.embed-desktop) .mobile-ps-panel {
     display: block;
     position: fixed;
     left: 0;
@@ -4821,13 +4821,13 @@ select:focus-visible,
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .mobile-drawer {
+  html:not(.embed-desktop) .mobile-drawer {
     background: #0277a8;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     padding: 8px 8px max(12px, env(safe-area-inset-bottom));
   }
-  .mobile-nav-item,
-  .mobile-account-btn {
+  html:not(.embed-desktop) .mobile-nav-item,
+  html:not(.embed-desktop) .mobile-account-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4843,17 +4843,17 @@ select:focus-visible,
     font-size: 16px;
     font-weight: 700;
   }
-  .mobile-nav-item img {
+  html:not(.embed-desktop) .mobile-nav-item img {
     width: 48px;
     height: 48px;
     object-fit: contain;
   }
-  .mobile-nav-item.is-active,
-  .mobile-nav-item:hover,
-  .mobile-account-btn:hover {
+  html:not(.embed-desktop) .mobile-nav-item.is-active,
+  html:not(.embed-desktop) .mobile-nav-item:hover,
+  html:not(.embed-desktop) .mobile-account-btn:hover {
     background: rgba(0, 30, 80, 0.2);
   }
-  .mobile-account {
+  html:not(.embed-desktop) .mobile-account {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -4861,7 +4861,7 @@ select:focus-visible,
     margin-top: 8px;
     padding: 0 8px;
   }
-  .mobile-avatar {
+  html:not(.embed-desktop) .mobile-avatar {
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -4869,16 +4869,16 @@ select:focus-visible,
     border: 2px solid rgba(255, 255, 255, 0.7);
     background: var(--spots-blue-soft);
   }
-  .mobile-avatar img {
+  html:not(.embed-desktop) .mobile-avatar img {
     width: 100%;
     height: auto;
     object-fit: cover;
   }
-  .mobile-account-btn.is-disabled {
+  html:not(.embed-desktop) .mobile-account-btn.is-disabled {
     opacity: 0.55;
     cursor: not-allowed;
   }
-  .mobile-logout-reason {
+  html:not(.embed-desktop) .mobile-logout-reason {
     width: 100%;
     max-width: 320px;
     margin-top: 4px;
@@ -4886,9 +4886,9 @@ select:focus-visible,
     font-size: 13px;
     text-align: left;
   }
-  .mobile-logout-reason-title { font-weight: 700; margin-bottom: 4px; }
-  .mobile-logout-reason ul { margin: 0; padding-left: 18px; }
-  .mobile-reporting-status {
+  html:not(.embed-desktop) .mobile-logout-reason-title { font-weight: 700; margin-bottom: 4px; }
+  html:not(.embed-desktop) .mobile-logout-reason ul { margin: 0; padding-left: 18px; }
+  html:not(.embed-desktop) .mobile-reporting-status {
     margin: 12px 8px 0;
     padding-top: 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
@@ -4896,15 +4896,16 @@ select:focus-visible,
     color: rgba(255, 255, 255, 0.75);
     font-size: 12px;
   }
-  .mobile-reporting-status strong { color: #fff; }
-  .mobile-ps-panel {
+  html:not(.embed-desktop) .mobile-reporting-status strong { color: #fff; }
+  html:not(.embed-desktop) .mobile-ps-panel {
     background: #fff;
     padding: 16px;
   }
-  .mobile-ps-panel .problem-station { position: static; }
-  .two-col > .problem-station { display: none; }
-  .tutorial-dock { top: auto; bottom: 16px; right: 16px; }
-  .tutorial-dock-panel { right: 0; max-width: calc(100vw - 32px); }
+  html:not(.embed-desktop) .mobile-ps-panel .problem-station { position: static; }
+  html:not(.embed-desktop) .two-col > .problem-station { display: none; }
+  html:not(.embed-desktop) .tutorial-dock { top: auto; bottom: 16px; right: 16px; }
+  html:not(.embed-desktop) .tutorial-dock-panel { right: 0; max-width: calc(100vw - 32px); }
+
 }
 
 /* =================================================================== */
