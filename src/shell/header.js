@@ -10,6 +10,7 @@ import { readAloudButton, speakOptionButton, tapSpeakerTip, stopSpeaking } from 
 import { categoryLabelFor, formatDateMDY } from '../utils.js';
 import { NAV_ICONS } from '../nav-icons.js';
 import { problemStation } from './problem-station.js';
+import { isNarrowViewport } from '../viewport.js';
 
 const MENU_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>';
 const CLOSE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>';
@@ -18,7 +19,7 @@ const REPORT_MESSAGE = 'Reports are part of the full SPOTS site. This tutorial b
 const SETTINGS_MESSAGE = 'Settings are part of the full SPOTS site. This tutorial build focuses on the symptom-reporting flow and does not include the settings view.';
 
 function isNarrowHeader() {
-  return window.matchMedia('(max-width: 1023px)').matches;
+  return isNarrowViewport();
 }
 
 function activeNavKey() {

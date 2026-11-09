@@ -1,5 +1,6 @@
 /** Practice guide boot. */
 import '../styles.css';
+import { onWideViewportChange } from './viewport.js';
 import { render, root } from './render.js';
 import { state } from './state.js';
 import { loadTranslations, translationsLoaded } from './i18n.js';
@@ -54,13 +55,14 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// The phone bar only exists under 1024px. If the window grows past that
-// while a panel is open, drop the panel so the wide header isn't a dialog.
-// The welcome tip also names a different corner on each side of this breakpoint.
-window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+// The phone bar only exists under 1024px (skipped in ?embed=1). If the
+// window grows past that while a panel is open, drop the panel so the
+// wide header isn't a dialog. The welcome tip also names a different
+// corner on each side of this breakpoint.
+onWideViewportChange(() => {
   const introOpen = !state.introDismissed && state.session === 1 && state.screen === 'home';
   let changed = introOpen;
-  if (e.matches && (state.mobileMenuOpen || state.problemStationOpen)) {
+  if (state.mobileMenuOpen || state.problemStationOpen) {
     state.mobileMenuOpen = false;
     state.problemStationOpen = false;
     changed = true;
