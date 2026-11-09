@@ -22,6 +22,7 @@ import {
 } from './screens/index.js';
 import { hintModal } from './hints.js';
 import { unavailableNoticeModal } from './shell/header.js';
+import { isNarrowViewport } from './viewport.js';
 
 const root = document.getElementById('app');
 
@@ -169,7 +170,7 @@ export function render() {
 
   // Keep the page behind the phone menu or Problem Station panel out of
   // the tab order. The header itself is the dialog, so it stays reachable.
-  const narrow = window.matchMedia('(max-width: 1023px)').matches;
+  const narrow = isNarrowViewport();
   if (narrow && (state.mobileMenuOpen || state.problemStationOpen)) {
     const header = root.querySelector('.site-header');
     const view = header && header.parentElement;

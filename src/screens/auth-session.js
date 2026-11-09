@@ -8,6 +8,7 @@ import { go, logout, skipToNextSession, toggleSymptom, openEditSymptom } from '.
 import { render } from '../render-ref.js';
 import { readAloudButton, speakOptionButton, tapSpeakerTip, stopSpeaking } from '../speech.js';
 import { categoryLabelFor, formatDateMDY } from '../utils.js';
+import { isNarrowViewport } from '../viewport.js';
 
 import { siteHeader } from '../shell/header.js';
 import { siteFooter } from '../shell/footer.js';
@@ -41,7 +42,7 @@ export function introModal() {
     }),
   );
 
-  const progressCorner = window.matchMedia('(max-width: 1023px)').matches ? 'bottom' : 'top';
+  const progressCorner = isNarrowViewport() ? 'bottom' : 'top';
   const progressTip = progressCorner === 'bottom'
     ? 'Your <strong>Practice Guide Progress</strong> is in the bottom-right corner. Click it anytime to view your steps.'
     : 'Your <strong>Practice Guide Progress</strong> is in the top-right corner. Click it anytime to view your steps.';
