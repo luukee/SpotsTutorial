@@ -68,6 +68,7 @@ export function logout() {
   state.questionStep = 0;
   state.editingSymptomId = null;
   state.showSavedSuccess = false;
+  state.showSevereAlert = false;
   state.currentBodyPart = null;
   state.currentActivity = null;
   state.currentSearchQuery = '';
@@ -123,6 +124,7 @@ export function skipToNextSession() {
   state.questionStep = 0;
   state.editingSymptomId = null;
   state.showSavedSuccess = false;
+  state.showSevereAlert = false;
   state.currentBodyPart = null;
   state.currentActivity = null;
   state.currentSearchQuery = '';
@@ -161,6 +163,7 @@ export function toggleSymptom(category, subcategory, contextLabel, name) {
   };
   state.questionStep = 0;
   state.showSavedSuccess = false;
+  state.showSevereAlert = false;
   render();
 }
 
@@ -175,6 +178,7 @@ export function dismissQuestionnaireModal() {
   state.editingSymptomId = null;
   state.questionStep = 0;
   state.showSavedSuccess = false;
+  state.showSevereAlert = false;
   if (fromActivity) go('activities');
   else render();
 }
@@ -195,6 +199,7 @@ export function openEditSymptom(sym) {
   state.pendingSymptom = sym;
   state.questionStep = 0;
   state.showSavedSuccess = false;
+  state.showSevereAlert = false;
   if (state.session === 2) state.tutorialFlags.session2VisitedReview = true;
   render();
 }

@@ -1392,6 +1392,40 @@ body.modal-open {
   max-width: 100%;
   box-shadow: 0 20px 60px rgba(0,0,0,0.30);
 }
+/* Extreme-rating healthcare disclaimer — plain white card above the
+ * questionnaire (mirrors spots-app AlertModal; not tutorial-popup chrome). */
+.alert-backdrop {
+  z-index: 110;
+}
+.alert-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px 28px 22px;
+  width: 420px;
+  max-width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+.alert-card > h2 {
+  margin: 0 0 16px;
+  font-family: var(--font-headings);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--spots-text);
+  text-align: center;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.alert-body {
+  margin: 0 0 24px;
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--spots-text);
+  text-align: center;
+}
+.alert-actions {
+  display: flex;
+  justify-content: center;
+}
 /* Activity-detail modal: scrollable internally so tall symptom lists don't
  * push the card off the viewport. `100%` is the iframe viewport when this
  * site is embedded in spots-app's TutorialModal; vh/dvh stay as fallbacks. */

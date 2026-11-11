@@ -4,7 +4,7 @@ export { activitiesScreen, activityDetailScreen } from './activities.js';
 export { feelingsScreen } from './feelings.js';
 export { searchScreen } from './search.js';
 export { pastProblemsScreen } from './past-problems.js';
-export { questionModal } from './questions.js';
+export { questionModal, severeAlertModal } from './questions.js';
 export {
   introModal,
   loginPromptModal,
