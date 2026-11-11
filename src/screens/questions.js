@@ -123,8 +123,12 @@ export function questionModal() {
   // Next / Done — picking a rating only writes the answer. This is more
   // predictable: tapping the wrong option doesn't shoot the user forward
   // a step, and the user can re-click the same option without consequence.
+  // Picking the last (most extreme) option opens the healthcare disclaimer
+  // alert — same rule as spots-app SymptomQuestionnaire.
   function setAnswer(value) {
     sym.answers[q.id] = value;
+    const last = q.options[q.options.length - 1];
+    if (last && value === last.value) state.showSevereAlert = true;
     render();
   }
 
@@ -172,7 +176,11 @@ export function questionModal() {
     tapSpeakerTip(),
   ]);
 
-  return el('div', { class: 'modal-backdrop', onclick: (e) => { if (e.target.classList.contains('modal-backdrop')) close(); } },
+  return el('div', {
+    class: 'modal-backdrop',
+    onclick: (e) => { if (e.target.classList.contains('modal-backdrop')) close(); },
+    'aria-hidden': state.showSevereAlert ? 'true' : null,
+  },
     el('div', {
       class: 'modal-card',
       role: 'dialog',
@@ -218,6 +226,46 @@ export function questionModal() {
           disabled: primaryDisabled ? '' : null,
           onclick: next,
         }, primaryLabel),
+      ),
+    ),
+  );
+}
+
+const SEVERE_ALERT_MESSAGE =
+  "Please remember, the problems reported in SPOTS are not automatically shared with your healthcare team. You must continue to report your/your child's problems to your healthcare team as you normally would.";
+
+/** Healthcare disclaimer shown when the most extreme rating is selected. */
+export function severeAlertModal() {
+  if (!state.showSevereAlert) return null;
+
+  function dismiss() {
+    state.showSevereAlert = false;
+    render();
+  }
+
+  const title = t('Alert', 'Alerta');
+  const message = t(SEVERE_ALERT_MESSAGE);
+
+  return el('div', {
+    class: 'modal-backdrop alert-backdrop',
+    onclick: (e) => { if (e.target.classList.contains('modal-backdrop')) dismiss(); },
+  },
+    el('div', {
+      class: 'alert-card',
+      role: 'alertdialog',
+      'aria-modal': 'true',
+      'aria-labelledby': 'severe-alert-title',
+      'aria-describedby': 'severe-alert-message',
+      onclick: (e) => e.stopPropagation(),
+    },
+      el('h2', { id: 'severe-alert-title' }, title),
+      el('p', { id: 'severe-alert-message', class: 'alert-body' }, message),
+      el('div', { class: 'alert-actions' },
+        el('button', {
+          type: 'button',
+          class: 'btn-pill primary',
+          onclick: dismiss,
+        }, t('Close')),
       ),
     ),
   );

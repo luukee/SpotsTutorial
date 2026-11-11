@@ -13,6 +13,7 @@ import {
   searchScreen,
   pastProblemsScreen,
   questionModal,
+  severeAlertModal,
   introModal,
   loginPromptModal,
   loginScreen,
@@ -109,6 +110,8 @@ export function render() {
   root.appendChild(view);
   const modal = questionModal();
   if (modal) root.appendChild(modal);
+  const severeAlert = severeAlertModal();
+  if (severeAlert) root.appendChild(severeAlert);
   // Floating tutorial-progress dock — present on every interactive screen.
   // Hidden on welcome (pre-session), login (logged out), welcome-back
   // (session 2 intro), and tutorial-complete (post-session) where progress
@@ -135,6 +138,7 @@ export function render() {
   const isModalOpen = !!(
     state.activeHintKey
     || state.pendingSymptom
+    || state.showSevereAlert
     || state.screen === 'activity-detail'
     || introOpen
     || loginPromptOpen
@@ -155,8 +159,8 @@ export function render() {
     }
   }
   // Modal focus: when a dialog is open, pull focus into it on first paint
-  // and keep Tab cycling inside it.
-  const dialogs = root.querySelectorAll('[role="dialog"]');
+  // and keep Tab cycling inside it. Include alertdialog (severe-rating alert).
+  const dialogs = root.querySelectorAll('[role="dialog"], [role="alertdialog"]');
   const topDialog = dialogs[dialogs.length - 1];
   if (topDialog && !topDialog.contains(document.activeElement)) {
     const logoutHint = state.mobileLogoutHint && document.getElementById('mobile-logout');

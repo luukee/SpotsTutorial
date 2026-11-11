@@ -10,7 +10,7 @@ const FOCUSABLE_SELECTOR = 'button:not([disabled]), [href], input:not([disabled]
 
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Tab') return;
-  const dialogs = root.querySelectorAll('[role="dialog"]');
+  const dialogs = root.querySelectorAll('[role="dialog"], [role="alertdialog"]');
   const dialog = dialogs[dialogs.length - 1];
   if (!dialog) return;
   const items = Array.from(dialog.querySelectorAll(FOCUSABLE_SELECTOR));
@@ -28,7 +28,11 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
-  if (state.activeHintKey) {
+  if (state.showSevereAlert) {
+    // Nested alert closes before the questionnaire underneath.
+    state.showSevereAlert = false;
+    render();
+  } else if (state.activeHintKey) {
     state.activeHintKey = null;
     render();
   } else if (state.pendingSymptom) {
