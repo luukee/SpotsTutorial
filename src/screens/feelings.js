@@ -33,7 +33,7 @@ export function feelingsScreen() {
             },
               el('div', { class: 'top-label feelings-label' }, feelingLabel),
               speakOptionButton(feelingLabel),
-              el('img', { src: D.assetPath('Feelings-Final', f.image), alt: '' }),
+              el('img', { src: D.assetPath('feelings', f.image), alt: '' }),
               el('div', { class: 'feelings-dots' },
                 el('span', {}), el('span', {}), el('span', {}),
               ),

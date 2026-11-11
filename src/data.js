@@ -105,14 +105,16 @@ export const D = (function () {
   };
 
   // ---------- Feelings ----------
+  // image filenames match spots-app FEELING_SYMPTOM_IMAGE_MAP →
+  // /assets/feelings/<slug>.svg
   const feelings = [
-    { key: 'fatigue',               label: 'Feeling tired' ,                                                                  image: 'Fatigue.jpg' },
-    { key: 'anxiety',               label: 'Worried or nervous feelings' ,                                              image: 'Anxiety.jpg' },
-    { key: 'depression',            label: 'Sad or unhappy feelings' ,                                                  image: 'Depression.jpg' },
-    { key: 'concentration_problem', label: 'Problems paying attention (focusing on TV, reading, or school work)' ,        image: 'Concentration_Problem.jpg' },
-    { key: 'memory_problem',        label: 'Problems remembering things' ,                                                           image: 'Memory_Problem.jpg' },
-    { key: 'restlessness',          label: 'Not being able to sit still' ,                                                                image: 'Restlessness.jpg' },
-    { key: 'suicidal_ideation',     label: 'Think about hurting yourself' ,                                                                  image: 'Suicidal_Ideation.jpg' },
+    { key: 'fatigue',               label: 'Feeling tired' ,                                                                  image: 'fatigue.svg' },
+    { key: 'anxiety',               label: 'Worried or nervous feelings' ,                                              image: 'anxiety.svg' },
+    { key: 'depression',            label: 'Sad or unhappy feelings' ,                                                  image: 'depression.svg' },
+    { key: 'concentration_problem', label: 'Problems paying attention (focusing on TV, reading, or school work)' ,        image: 'concentration.svg' },
+    { key: 'memory_problem',        label: 'Problems remembering things' ,                                                           image: 'memory.svg' },
+    { key: 'restlessness',          label: 'Not being able to sit still' ,                                                                image: 'restlessness.svg' },
+    { key: 'suicidal_ideation',     label: 'Think about hurting yourself' ,                                                                  image: 'suicidal.svg' },
   ];
 
   // ---------- Searchable corpus ----------

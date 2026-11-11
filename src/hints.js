@@ -237,13 +237,13 @@ export function activitiesHintStage() {
             el('div', { class: 'hint-act-card-inner' }),
           ),
           // Sleep — concrete. Mirrors the real `.picker-card` chassis
-          // (top label + real Activities-Final/Sleeping.jpg illustration
+          // (top label + real activities/sleeping.svg illustration
           // filling most of the card).
           el('div', { class: 'hint-act-card concrete' },
             el('div', { class: 'hint-act-card-label' }, t('Sleeping')),
             el('img', {
               class: 'hint-act-card-thumb',
-              src: '/assets/Activities-Final/Sleeping.jpg',
+              src: '/assets/activities/sleeping.svg',
               alt: '',
             }),
             el('div', { class: 'hint-target hint-act-target-sleep' }),
@@ -269,7 +269,7 @@ export function activitiesHintStage() {
         el('div', { class: 'hint-act-modal-title' }, t('Sleeping')),
         el('img', {
           class: 'hint-act-modal-image',
-          src: '/assets/Activities-Final/Sleeping.jpg',
+          src: '/assets/activities/sleeping.svg',
           alt: 'Sleeping',
         }),
         // Activity-modal symptom row chassis: orange-outlined pill, name
@@ -328,14 +328,14 @@ export function feelingsHintStage() {
             el('span', { class: 'hint-feel-card-label-bar' }),
             el('div', { class: 'hint-feel-card-inner' }),
           ),
-          // Worried — concrete. Real Anxiety.jpg (the production asset
+          // Worried — concrete. Real anxiety.svg (the production asset
           // for "Worried or nervous feelings"; see data.js feelings list)
           // fills the bulk of the card.
           el('div', { class: 'hint-feel-card concrete' },
             el('div', { class: 'hint-feel-card-label' }, t('Worried')),
             el('img', {
               class: 'hint-feel-card-thumb',
-              src: '/assets/Feelings-Final/Anxiety.jpg',
+              src: '/assets/feelings/anxiety.svg',
               alt: '',
             }),
             el('div', { class: 'hint-target hint-feel-target-worried' }),
@@ -360,7 +360,7 @@ export function feelingsHintStage() {
       ),
     ),
     // SCREEN 2: feelings detail modal — mirrors Activities modal:
-    // title → large Anxiety.jpg illustration → symptom rows (orange-pill,
+    // title → large anxiety.svg illustration → symptom rows (orange-pill,
     // name left, blue radio right, no thumb).
     el('div', { class: 'hint-screen hint-feel-screen-list' },
       hintMiniHeader('feelings'),
@@ -369,7 +369,7 @@ export function feelingsHintStage() {
         el('div', { class: 'hint-feel-modal-title' }, t('Worried')),
         el('img', {
           class: 'hint-feel-modal-image',
-          src: '/assets/Feelings-Final/Anxiety.jpg',
+          src: '/assets/feelings/anxiety.svg',
           alt: 'Worried',
         }),
         el('div', { class: 'hint-feel-modal-list' },
