@@ -15,6 +15,9 @@ export const state = {
   screen: 'welcome',
   selected: [],
   currentBodyPart: null,
+  // Body part the user left when opening Skin via "Go to Skin". Powers the
+  // "Back to {part}" control on the Skin detail panel (spots-app parity).
+  previousBodyPart: null,
   currentActivity: null,
   currentSearchQuery: '',
   pendingSymptom: null,
