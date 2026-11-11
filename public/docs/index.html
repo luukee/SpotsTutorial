@@ -167,29 +167,6 @@
       color: var(--ink);
     }
 
-    .two-col {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 720px) {
-      .two-col {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .two-col section {
-      margin: 0;
-      padding: 0.9rem 1rem;
-      background: var(--soft);
-      border-radius: 6px;
-    }
-
-    .two-col h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1rem;
-    }
-
     .table-wrap {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -266,8 +243,8 @@
     </p>
     <aside class="staff-note" aria-label="Audience">
       <p>
-        Written for UTH study staff (for example Stacey and Brenda) answering
-        onboarding questions.
+        Written for UTH study staff answering onboarding questions. Prefer the
+        participant-facing wording below when talking with families.
       </p>
     </aside>
 
@@ -334,35 +311,22 @@
     </section>
 
     <section class="panel" aria-labelledby="what-to-say">
-      <h2 id="what-to-say">What to tell participants vs staff only</h2>
-      <div class="two-col">
-        <section aria-labelledby="tell-participants">
-          <h3 id="tell-participants">Tell participants</h3>
-          <ul>
-            <li>
-              Sign in with Google using the <strong>same email</strong> that’s on
-              their SPOTS record.
-            </li>
-            <li>
-              If they create an email/password account on spotsymptoms.org, they
-              still need to enter the <strong>User ID</strong> staff gave them.
-            </li>
-          </ul>
-        </section>
-        <section aria-labelledby="staff-only">
-          <h3 id="staff-only">Staff only — do not tell participants</h3>
-          <ul>
-            <li>
-              Don’t say “Google doesn’t need a SPOTS username.” That can confuse
-              people into skipping User ID on password signup.
-            </li>
-            <li>
-              Field names like <code>email_primary</code>,
-              <code>spots_user_id</code>, and Cognito stay internal.
-            </li>
-          </ul>
-        </section>
-      </div>
+      <h2 id="what-to-say">Suggested wording for families</h2>
+      <ul>
+        <li>
+          Sign in with Google using the <strong>same email</strong> that’s on
+          their SPOTS record.
+        </li>
+        <li>
+          If they create an email/password account on spotsymptoms.org, they
+          still need to enter the <strong>User ID</strong> staff gave them.
+        </li>
+      </ul>
+      <p>
+        Keep REDCap field names (<code>email_primary</code>,
+        <code>spots_user_id</code>) and Cognito details for staff setup talk —
+        families only need the email and User ID steps above.
+      </p>
     </section>
 
     <section class="panel" aria-labelledby="cheat-sheet">
