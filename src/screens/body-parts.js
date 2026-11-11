@@ -43,7 +43,10 @@ export function bodyPartsScreen() {
       el('div', { class: 'bp-list' },
         D.bodyParts.map(bp => el('div', {
           class: 'bp-row',
-          onclick: () => go('body-part-detail', { currentBodyPart: bp }),
+          onclick: () => {
+            state.previousBodyPart = null;
+            go('body-part-detail', { currentBodyPart: bp });
+          },
         },
           el('img', { class: 'thumb', src: D.assetPath('BodyParts-Final', bp.image), alt: '' }),
           el('span', { class: 'row-label' }, tLabel(bp)),
@@ -114,15 +117,51 @@ export function bodyPartDetailScreen() {
     }),
   );
 
+  const isSkin = bp.key === 'skin';
+  const skinPart = D.bodyParts.find(b => b.key === 'skin');
+  const prev = state.previousBodyPart;
+
+  const footerActions = [];
+  if (!isSkin && skinPart) {
+    footerActions.push(el('button', {
+      type: 'button',
+      class: 'bp-detail-action bp-detail-action--secondary',
+      onclick: () => {
+        state.previousBodyPart = bp;
+        go('body-part-detail', { currentBodyPart: skinPart });
+      },
+    }, t('Go to Skin', 'Ir a Piel')));
+  }
+  if (isSkin && prev) {
+    const prevLabel = tLabel(prev);
+    footerActions.push(el('button', {
+      type: 'button',
+      class: 'bp-detail-action bp-detail-action--secondary',
+      onclick: () => {
+        const restore = state.previousBodyPart;
+        state.previousBodyPart = null;
+        go('body-part-detail', { currentBodyPart: restore });
+      },
+    }, fillTemplate(
+      t('← Back to {bodyPart}', '← Volver a {bodyPart}'),
+      { bodyPart: prevLabel },
+    )));
+  }
+  footerActions.push(el('button', {
+    type: 'button',
+    class: 'bp-detail-action bp-detail-action--primary',
+    'aria-label': t('Back to all body parts', 'Volver a todas las partes del cuerpo'),
+    onclick: () => go('body-parts'),
+  }, t('← All Body Parts')));
+
   const detail = el('div', { class: 'bp-list-panel' },
     el('div', { class: 'panel-header' },
       el('span', { class: 'panel-title' }, bpLabel),
-      el('button', { class: 'panel-link', onclick: () => go('body-parts') }, t('← All Body Parts')),
     ),
     readAloudButton(bodyPartListenText),
     el('img', { class: 'bp-detail-figure', src: D.assetPath('BodyParts-Final', bp.image), alt: '' }),
-    el('button', { class: 'go-to-skin', onclick: () => go('body-part-detail', { currentBodyPart: D.bodyParts.find(b => b.key === 'skin') || bp }) }, t('Go To Skin')),
     list,
+    el('div', { class: 'bp-detail-actions' }, ...footerActions),
   );
 
   return el('div', {},
@@ -240,13 +279,17 @@ export function wireBodyHotspots(svg) {
     g.setAttribute('tabindex', '0');
     g.setAttribute('role', 'button');
     g.setAttribute('aria-label', tLabel(bp));
-    g.addEventListener('click', () => go('body-part-detail', { currentBodyPart: bp }));
+    function openPart() {
+      state.previousBodyPart = null;
+      go('body-part-detail', { currentBodyPart: bp });
+    }
+    g.addEventListener('click', openPart);
     g.addEventListener('mouseenter', () => g.classList.add('highlighted'));
     g.addEventListener('mouseleave', () => g.classList.remove('highlighted'));
     g.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        go('body-part-detail', { currentBodyPart: bp });
+        openPart();
       }
     });
   });
