@@ -131,13 +131,13 @@ export function bodyPartsHintStage() {
                 el('span', { class: 'hint-bp-parts-chev' }, '›'),
               ),
               // Concrete callback for Left Foot: real production thumbnail
-              // (assets/BodyParts-Final/Left_Foot.jpg) in the thumb slot so
+              // (assets/body-parts/foot.svg) in the thumb slot so
               // the user recognizes the body part the cursor will navigate
               // to on screen 2. Label + chevron stay abstract.
               el('div', { class: 'hint-bp-parts-row' },
                 el('img', {
                   class: 'hint-bp-parts-thumb hint-bp-parts-thumb-img',
-                  src: '/assets/BodyParts-Final/Left_Foot.jpg',
+                  src: '/assets/body-parts/foot.svg',
                   alt: '',
                 }),
                 el('div', { class: 'hint-bp-parts-label' }),

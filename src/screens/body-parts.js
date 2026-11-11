@@ -48,7 +48,7 @@ export function bodyPartsScreen() {
             go('body-part-detail', { currentBodyPart: bp });
           },
         },
-          el('img', { class: 'thumb', src: D.assetPath('BodyParts-Final', bp.image), alt: '' }),
+          el('img', { class: 'thumb', src: D.assetPath('body-parts', bp.image), alt: '' }),
           el('span', { class: 'row-label' }, tLabel(bp)),
           el('span', { class: 'chev' }, '›'),
         )),
@@ -159,7 +159,7 @@ export function bodyPartDetailScreen() {
       el('span', { class: 'panel-title' }, bpLabel),
     ),
     readAloudButton(bodyPartListenText),
-    el('img', { class: 'bp-detail-figure', src: D.assetPath('BodyParts-Final', bp.image), alt: '' }),
+    el('img', { class: 'bp-detail-figure', src: D.assetPath('body-parts', bp.image), alt: '' }),
     list,
     el('div', { class: 'bp-detail-actions' }, ...footerActions),
   );
