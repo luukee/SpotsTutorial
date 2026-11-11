@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self' data:;"
+  />
+  <meta name="theme-color" content="#065395" />
+  <title>SPOTS Docs — Signup and Login</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f7fb;
+      --ink: #12304f;
+      --muted: #4a627a;
+      --accent: #065395;
+      --frame: rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 10;
+      padding: 0.75rem 1rem;
+      background: #fff;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 1.5rem 0 2.5rem;
+    }
+
+    h1 {
+      margin: 0 0 0.35rem;
+      font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+      line-height: 1.25;
+    }
+
+    .lede {
+      margin: 0 0 1.25rem;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.45;
+      max-width: 42rem;
+    }
+
+    .doc-pages {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .doc-pages li {
+      margin: 0;
+      padding: 0;
+    }
+
+    .doc-pages img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--frame);
+      border-radius: 8px;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <main id="main-content">
+    <h1>SPOTS Signup and Login</h1>
+    <p class="lede">Design reference. This page is unlisted — open it only via the shared URL.</p>
+    <ol class="doc-pages">
+      <li>
+        <img
+          src="/assets/docs/Group%201.png"
+          alt="SPOTS signup and login design, page 1"
+          width="788"
+          height="861"
+        />
+      </li>
+      <li>
+        <img
+          src="/assets/docs/Group%202.png"
+          alt="SPOTS signup and login design, page 2"
+          width="788"
+          height="943"
+        />
+      </li>
+      <li>
+        <img
+          src="/assets/docs/Group%203.png"
+          alt="SPOTS signup and login design, page 3"
+          width="786"
+          height="909"
+        />
+      </li>
+      <li>
+        <img
+          src="/assets/docs/Group%204.png"
+          alt="SPOTS signup and login design, page 4"
+          width="1114"
+          height="861"
+        />
+      </li>
+    </ol>
+  </main>
+</body>
+</html>
