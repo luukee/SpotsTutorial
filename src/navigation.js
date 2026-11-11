@@ -7,6 +7,9 @@ export function go(screen, opts = {}) {
   stopSpeaking();
   state.screen = screen;
   Object.assign(state, opts);
+  // Leaving the body-part detail flow (or opening the All Body Parts list)
+  // drops the Skin "back to previous part" pointer.
+  if (screen === 'body-parts') state.previousBodyPart = null;
   // Tutorial milestone flags. Session 1 has a "View Past Problems" step that
   // counts as soon as the user lands on the screen. Session 2's equivalent
   // step is "Add a past problem" — that's checked off in the items list by
@@ -70,6 +73,7 @@ export function logout() {
   state.showSavedSuccess = false;
   state.showSevereAlert = false;
   state.currentBodyPart = null;
+  state.previousBodyPart = null;
   state.currentActivity = null;
   state.currentSearchQuery = '';
   state.showBodyBack = false;
@@ -126,6 +130,7 @@ export function skipToNextSession() {
   state.showSavedSuccess = false;
   state.showSevereAlert = false;
   state.currentBodyPart = null;
+  state.previousBodyPart = null;
   state.currentActivity = null;
   state.currentSearchQuery = '';
   state.showBodyBack = false;
