@@ -23,6 +23,10 @@ export const state = {
   // "Saved" confirmation. Cleared on Close / open / logout. Pending symptom
   // stays mounted so the dialog can show this view.
   showSavedSuccess: false,
+  // Extreme-rating disclaimer (mirrors spots-app AlertModal). Set when the
+  // user picks the last option on any questionnaire step; cleared on close
+  // / dismiss / logout.
+  showSevereAlert: false,
   // When editing an already-selected symptom (clicked from the Problem
   // Station), the question modal points `pendingSymptom` AT the live entry
   // in `state.selected` so every answer write persists immediately — no
