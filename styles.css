@@ -949,7 +949,7 @@ body.modal-open {
 .bp-row .thumb {
   width: 36px; height: 36px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   background: var(--spots-bg-light-gray);
   flex: 0 0 auto;
 }
@@ -960,7 +960,7 @@ body.modal-open {
 .bp-detail-figure {
   width: 110px; height: 110px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   margin: 0 auto;
   display: block;
   background: var(--spots-bg-light-gray);

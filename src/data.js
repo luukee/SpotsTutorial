@@ -10,31 +10,32 @@
 export const D = (function () {
 
   // ---------- Body parts ----------
-  // key matches body-part-symptom-service.ts BODY_PART_TO_SUBCATEGORY values,
-  // image filenames match /assets/BodyParts-Final/<File>.jpg
+  // key matches body-part-symptom-service.ts BODY_PART_TO_SUBCATEGORY values.
+  // image filenames match spots-app BODY_PART_IMAGE_SLUG_BY_LEGACY_ID →
+  // /assets/body-parts/<slug>.svg (left/right pairs share one SVG).
   const bodyParts = [
-    { key: 'head',        label: 'Head' ,          image: 'Head.jpg' },
-    { key: 'hair_scalp',  label: 'Hair / Scalp' , image: 'Hair_Scalp.jpg' },
-    { key: 'left_eye',    label: 'Left Eye' ,   image: 'Left_Eye.jpg' },
-    { key: 'right_eye',   label: 'Right Eye' ,     image: 'Right_Eye.jpg' },
-    { key: 'left_ear',    label: 'Left Ear' ,  image: 'Left_Ear.jpg' },
-    { key: 'right_ear',   label: 'Right Ear' ,    image: 'Right_Ear.jpg' },
-    { key: 'nose',        label: 'Nose' ,           image: 'Nose.jpg' },
-    { key: 'mouth',       label: 'Mouth' ,            image: 'Mouth.jpg' },
-    { key: 'neck_throat', label: 'Neck / Throat' , image: 'Neck_Throat.jpg' },
-    { key: 'chest',       label: 'Chest' ,           image: 'Chest.jpg' },
-    { key: 'abdomen',     label: 'Stomach' ,        image: 'Abdomen.jpg' },
-    { key: 'back',        label: 'Back' ,         image: 'Back.jpg' },
-    { key: 'buttocks',    label: 'Buttocks' ,         image: 'Buttocks.jpg' },
-    { key: 'skin',        label: 'Skin' ,            image: 'Skin.jpg' },
-    { key: 'left_arm',    label: 'Left Arm' , image: 'Left_Arm.jpg' },
-    { key: 'right_arm',   label: 'Right Arm' ,   image: 'Right_Arm.jpg' },
-    { key: 'left_hand',   label: 'Left Hand' ,  image: 'Left_Hand.jpg' },
-    { key: 'right_hand',  label: 'Right Hand' ,    image: 'Right_Hand.jpg' },
-    { key: 'left_leg',    label: 'Left Leg' ,image: 'Left_Leg.jpg' },
-    { key: 'right_leg',   label: 'Right Leg' ,  image: 'Right_Leg.jpg' },
-    { key: 'left_foot',   label: 'Left Foot' ,   image: 'Left_Foot.jpg' },
-    { key: 'right_foot',  label: 'Right Foot' ,     image: 'Right_Foot.jpg' },
+    { key: 'head',        label: 'Head' ,          image: 'head.svg' },
+    { key: 'hair_scalp',  label: 'Hair / Scalp' , image: 'scalp.svg' },
+    { key: 'left_eye',    label: 'Left Eye' ,   image: 'eyes.svg' },
+    { key: 'right_eye',   label: 'Right Eye' ,     image: 'eyes.svg' },
+    { key: 'left_ear',    label: 'Left Ear' ,  image: 'ears.svg' },
+    { key: 'right_ear',   label: 'Right Ear' ,    image: 'ears.svg' },
+    { key: 'nose',        label: 'Nose' ,           image: 'nose.svg' },
+    { key: 'mouth',       label: 'Mouth' ,            image: 'mouth.svg' },
+    { key: 'neck_throat', label: 'Neck / Throat' , image: 'esophagus.svg' },
+    { key: 'chest',       label: 'Chest' ,           image: 'lungs.svg' },
+    { key: 'abdomen',     label: 'Stomach' ,        image: 'stomach.svg' },
+    { key: 'back',        label: 'Back' ,         image: 'back.svg' },
+    { key: 'buttocks',    label: 'Buttocks' ,         image: 'buttocks.svg' },
+    { key: 'skin',        label: 'Skin' ,            image: 'skin.svg' },
+    { key: 'left_arm',    label: 'Left Arm' , image: 'arms.svg' },
+    { key: 'right_arm',   label: 'Right Arm' ,   image: 'arms.svg' },
+    { key: 'left_hand',   label: 'Left Hand' ,  image: 'hands.svg' },
+    { key: 'right_hand',  label: 'Right Hand' ,    image: 'hands.svg' },
+    { key: 'left_leg',    label: 'Left Leg' ,image: 'legs.svg' },
+    { key: 'right_leg',   label: 'Right Leg' ,  image: 'legs.svg' },
+    { key: 'left_foot',   label: 'Left Foot' ,   image: 'foot.svg' },
+    { key: 'right_foot',  label: 'Right Foot' ,     image: 'foot.svg' },
   ];
 
   // Per-subcategory symptom terms.
