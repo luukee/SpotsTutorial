@@ -115,7 +115,7 @@ body.modal-open {
 .site-header {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: 14px 32px 8px 180px;
   min-height: 130px;
   gap: 16px;
@@ -203,28 +203,11 @@ body.modal-open {
   color: var(--spots-gray-900);
 }
 
-/* Right side: settings + avatar. Settings gear and avatar share the same
- * 84px diameter — the gear's inner SVG scales accordingly. */
+/* Right side: avatar only (Settings lives in the avatar dropdown). */
 .user-area {
   display: flex; align-items: center; gap: 16px;
   justify-content: flex-end;
   flex: 0 0 auto;
-}
-.icon-btn {
-  width: 84px; height: 84px;
-  border-radius: 50%;
-  background: var(--spots-blue-medium);
-  color: white;
-  border: none;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.10);
-}
-.icon-btn svg {
-  width: 42px;
-  height: 42px;
-  display: block;
 }
 .avatar {
   width: 84px; height: 84px;
@@ -2065,12 +2048,6 @@ img.hint-mini-corner {
   align-items: center;
   gap: 8px;
   flex: 0 0 auto;
-}
-.hint-mini-gear {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--spots-blue-medium);
 }
 .hint-mini-avatar {
   width: 32px;
@@ -4016,9 +3993,9 @@ img.hint-mini-corner {
 }
 
 /* Click-pulse ring over the avatar. The avatar sits at the right edge of
- * the mini header inside `.hint-mini-user` (padding-right 12, gear 22,
- * gap 8, avatar 32). Avatar center ≈ (512, 30) in stage coords. The pulse
- * ring is absolutely positioned to the header, 32×32 centered on avatar. */
+ * the mini header inside `.hint-mini-user` (padding-right 12, avatar 32).
+ * Avatar center ≈ (512, 30) in stage coords. The pulse ring is absolutely
+ * positioned to the header, 32×32 centered on avatar. */
 .hint-comp-target-avatar {
   position: absolute;
   top: 13px;
@@ -4226,6 +4203,26 @@ img.hint-mini-corner {
   height: 1px;
   background: var(--spots-border);
   margin: 8px -16px;
+}
+.um-settings {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 6px 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--spots-gray-900);
+  cursor: pointer;
+  border-radius: 6px;
+}
+.um-settings:hover {
+  color: var(--spots-blue);
+  text-decoration: underline;
+}
+.um-settings:focus-visible {
+  outline: 2px solid var(--spots-blue);
+  outline-offset: 2px;
 }
 .um-logout {
   width: 100%;
