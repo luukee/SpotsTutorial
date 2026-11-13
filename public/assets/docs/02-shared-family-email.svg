@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="700" viewBox="0 0 920 700" role="img" aria-labelledby="title desc">
+  <title id="title">Shared family email - most common</title>
+  <desc id="desc">Parent and child share one email_primary. After sign-in they pick Parent or Child on Reporting as.</desc>
+  <rect width="920" height="700" fill="#f4f7fb"/>
+  <rect x="24" y="24" width="872" height="652" rx="16" fill="#ffffff" stroke="#d5deea"/>
+
+  <text x="52" y="72" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#065395">2) Shared family email (most common)</text>
+  <text x="52" y="106" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4a627a">Parent and child use the same email_primary in REDCap</text>
+
+  <text x="52" y="150" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#12304f">REDCap setup</text>
+
+  <rect x="52" y="168" width="380" height="110" rx="12" fill="#e8eef5" stroke="#9bb8d6"/>
+  <text x="72" y="200" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#12304f">Parent row</text>
+  <text x="72" y="230" font-family="ui-monospace, Menlo, monospace" font-size="14" fill="#12304f">email_primary: family@email.com</text>
+  <text x="72" y="256" font-family="ui-monospace, Menlo, monospace" font-size="14" fill="#4a627a">spots_user_id: (any parent ID)</text>
+
+  <rect x="468" y="168" width="380" height="110" rx="12" fill="#e8eef5" stroke="#9bb8d6"/>
+  <text x="488" y="200" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#12304f">Child row</text>
+  <text x="488" y="230" font-family="ui-monospace, Menlo, monospace" font-size="14" fill="#12304f">email_primary: family@email.com</text>
+  <text x="488" y="256" font-family="ui-monospace, Menlo, monospace" font-size="14" fill="#4a627a">spots_user_id: (any child ID)</text>
+
+  <path d="M460 300 L460 330" stroke="#065395" stroke-width="3" fill="none"/>
+  <path d="M450 320 L460 338 L470 320" fill="#065395"/>
+
+  <rect x="220" y="348" width="480" height="56" rx="12" fill="#065395"/>
+  <text x="460" y="384" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#ffffff">Sign in with family@email.com</text>
+
+  <path d="M460 416 L460 446" stroke="#065395" stroke-width="3" fill="none"/>
+  <path d="M450 436 L460 454 L470 436" fill="#065395"/>
+
+  <rect x="220" y="464" width="480" height="56" rx="12" fill="#fff3d6" stroke="#d4a017"/>
+  <text x="460" y="500" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#8a6a12">Reporting as screen - pick Parent or Child</text>
+
+  <rect x="52" y="556" width="812" height="88" rx="12" fill="#eaf6ef" stroke="#8fbf9a"/>
+  <text x="76" y="592" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#1f6b3a">Automated emails</text>
+  <text x="76" y="620" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#12304f">Go to email_primary (family@email.com). No new REDCap email field needed.</text>
+</svg>

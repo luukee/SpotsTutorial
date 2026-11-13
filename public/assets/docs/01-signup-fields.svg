@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="720" viewBox="0 0 920 720" role="img" aria-labelledby="title desc">
+  <title id="title">Signup fields: User ID vs Email</title>
+  <desc id="desc">Staff guide for what families enter in the spotsymptoms.org signup User ID and Email boxes.</desc>
+  <rect width="920" height="720" fill="#f4f7fb"/>
+  <rect x="24" y="24" width="872" height="672" rx="16" fill="#ffffff" stroke="#d5deea"/>
+
+  <text x="52" y="72" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#065395">1) Signup - what goes in each box</text>
+  <text x="52" y="108" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4a627a">Email/password signup on spotsymptoms.org</text>
+
+  <rect x="52" y="140" width="400" height="320" rx="12" fill="#e8eef5" stroke="#bcd0e4"/>
+  <text x="76" y="178" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#12304f">Signup form</text>
+
+  <text x="76" y="220" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="650" fill="#065395">User ID</text>
+  <rect x="76" y="230" width="340" height="44" rx="8" fill="#ffffff" stroke="#065395" stroke-width="2"/>
+  <text x="92" y="258" font-family="ui-monospace, Menlo, monospace" font-size="15" fill="#12304f">smith_parent</text>
+
+  <text x="76" y="308" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="650" fill="#065395">Email</text>
+  <rect x="76" y="318" width="340" height="44" rx="8" fill="#ffffff" stroke="#065395" stroke-width="2"/>
+  <text x="92" y="346" font-family="ui-monospace, Menlo, monospace" font-size="15" fill="#12304f">parent@email.com</text>
+
+  <text x="76" y="396" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="650" fill="#065395">Password</text>
+  <rect x="76" y="406" width="340" height="44" rx="8" fill="#ffffff" stroke="#9bb4cb"/>
+  <text x="92" y="434" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#4a627a">********</text>
+
+  <rect x="492" y="140" width="372" height="148" rx="12" fill="#fff8e8" stroke="#e0c57a"/>
+  <text x="512" y="174" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#8a6a12">User ID = REDCap spots_user_id</text>
+  <text x="512" y="204" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#12304f">Usually a username staff created</text>
+  <text x="512" y="228" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#12304f">(example: smith_parent).</text>
+  <text x="512" y="260" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#12304f">Families should not invent this.</text>
+
+  <rect x="492" y="308" width="372" height="152" rx="12" fill="#eaf6ef" stroke="#8fbf9a"/>
+  <text x="512" y="342" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#1f6b3a">Email = sign-in email</text>
+  <text x="512" y="372" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#12304f">Same email as REDCap</text>
+  <text x="512" y="396" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#12304f">email_primary for that person</text>
+  <text x="512" y="428" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#12304f">(usual family / parent case).</text>
+
+  <rect x="52" y="492" width="812" height="100" rx="12" fill="#eef4fb" stroke="#9bb8d6"/>
+  <text x="76" y="528" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#065395">Special case - child logs in alone with their own email</text>
+  <text x="76" y="556" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#12304f">Put the child email in REDCap spots_user_id. Keep parent email in email_primary.</text>
+  <text x="76" y="580" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#12304f">At signup, child enters that same child email in BOTH User ID and Email.</text>
+
+  <text x="52" y="640" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#4a627a">Google sign-in has no User ID box - they use Sign in with Google with the matching email.</text>
+  <text x="52" y="664" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#4a627a">Still tell password-signup families to enter the User ID staff gave them.</text>
+</svg>
