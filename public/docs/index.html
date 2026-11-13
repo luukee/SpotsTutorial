@@ -248,6 +248,60 @@
       </p>
     </aside>
 
+    <section class="panel" aria-labelledby="signup-fields">
+      <h2 id="signup-fields">Signup — User ID vs Email</h2>
+      <p>
+        On email/password signup, families see two different boxes. They are
+        <strong>not</strong> interchangeable.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <caption class="visually-hidden">
+            Signup form fields and what to enter
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Box on signup</th>
+              <th scope="col">What to enter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>User ID</strong></td>
+              <td>
+                The value in REDCap <code>spots_user_id</code> (usually a
+                username staff created, e.g. <code>smith_parent</code>). Families
+                should not invent this.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Email</strong></td>
+              <td>
+                The email they will sign in with. For the usual family case, this
+                matches REDCap <code>email_primary</code>.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Password</strong></td>
+              <td>One the family creates.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <strong>Child logs in alone with their own email:</strong> staff put the
+        child’s email in that child’s <code>spots_user_id</code>, keep the
+        <strong>parent</strong> email on <code>email_primary</code>, and the child
+        enters that same child email in <strong>both</strong> User ID and Email at
+        signup.
+      </p>
+      <p>
+        <strong>Google:</strong> no User ID box — they use Sign in with Google with
+        the matching email. Still tell password-signup families to enter the User
+        ID staff gave them (do not say “Google doesn’t need a User ID”).
+      </p>
+    </section>
+
     <section class="panel" aria-labelledby="how-login-works">
       <h2 id="how-login-works">How login matching works</h2>
       <p>
@@ -270,6 +324,13 @@
     <section class="panel" aria-labelledby="quick-answers">
       <h2 id="quick-answers">Quick answers</h2>
       <dl class="qa">
+        <dt>Is the signup User ID supposed to be a username or an email?</dt>
+        <dd>
+          Usually a <strong>username</strong> from REDCap <code>spots_user_id</code>.
+          Use an <strong>email</strong> in User ID only for the child-alone case
+          (same child email in User ID and Email).
+        </dd>
+
         <dt>Can a parent and child share the same <code>email_primary</code> and both report?</dt>
         <dd>
           Yes. That is the normal design. After sign-in they get the
@@ -293,19 +354,13 @@
         <dd>
           Yes, if their Google account email matches the child’s
           <code>spots_user_id</code>. Only the child record matches, so they go
-          straight in (no profile picker).
+          straight into the child’s account (no profile picker).
         </dd>
 
         <dt>Does capitalization matter in <code>spots_user_id</code>?</dt>
         <dd>
           Login matching is case-insensitive. Still enter emails in lowercase
           for consistency elsewhere in REDCap.
-        </dd>
-
-        <dt>Does Google login use a special SPOTS username?</dt>
-        <dd>
-          Google uses the Google account email matched in REDCap. Password signup
-          still needs the User ID staff gave them. See participant wording below.
         </dd>
       </dl>
     </section>
@@ -314,12 +369,16 @@
       <h2 id="what-to-say">Suggested wording for families</h2>
       <ul>
         <li>
-          Sign in with Google using the <strong>same email</strong> that’s on
-          their SPOTS record.
+          Sign in with the <strong>same email</strong> that’s on their SPOTS
+          record (Google or password).
         </li>
         <li>
-          If they create an email/password account on spotsymptoms.org, they
-          still need to enter the <strong>User ID</strong> staff gave them.
+          For email/password signup, enter the <strong>User ID</strong> staff gave
+          them, plus their email and a password.
+        </li>
+        <li>
+          If parent and child share one email, after login they
+          <strong>choose Parent or Child</strong>.
         </li>
       </ul>
       <p>
@@ -372,38 +431,41 @@
     </section>
 
     <h2 id="diagrams" class="diagrams-heading">Scenario diagrams</h2>
-    <p class="lede">Each diagram matches one common REDCap setup.</p>
+    <p class="lede">
+      Staff cards for signup, the usual shared-email setup, child-alone login, and
+      how Cognito email is matched in REDCap.
+    </p>
     <ol class="doc-pages">
       <li>
         <img
-          src="/assets/docs/Group%201.png"
-          alt="Scenario 1: parent and child with different email_primary values. Each signs in with their own email and goes straight in with no profile picker. Automated emails go to each person’s own email_primary."
-          width="788"
-          height="861"
+          src="/assets/docs/01-signup-fields.svg"
+          alt="Diagram 1: Signup form. User ID is the REDCap spots_user_id username staff created. Email is the sign-in email matching email_primary. Special case: child alone puts the same child email in both User ID and Email."
+          width="920"
+          height="720"
         />
       </li>
       <li>
         <img
-          src="/assets/docs/Group%202.png"
-          alt="Scenario 2: same email_primary on parent and child, with the child’s own email in spots_user_id. Parent email sign-in shows Reporting as. Child email sign-in goes straight in as child. Automated emails go to the parent email_primary."
-          width="788"
-          height="943"
+          src="/assets/docs/02-shared-family-email.svg"
+          alt="Diagram 2: Shared family email. Parent and child both have the same email_primary. Sign-in shows Reporting as to pick Parent or Child. Automated emails go to that shared email_primary."
+          width="920"
+          height="700"
         />
       </li>
       <li>
         <img
-          src="/assets/docs/Group%203.png"
-          alt="Scenario 3: parent and child share the same email_primary. After sign-in they use the Reporting as screen to pick Parent or Child. Automated emails go to the shared family email."
-          width="786"
-          height="909"
+          src="/assets/docs/03-child-own-email.svg"
+          alt="Diagram 3: Child logs in alone. Parent email stays on email_primary. Child email is in spots_user_id. Parent email sign-in shows Reporting as. Child email sign-in goes straight into the child account. Automated emails still go to the parent."
+          width="920"
+          height="760"
         />
       </li>
       <li>
         <img
-          src="/assets/docs/Group%204.png"
-          alt="Scenario 4: other common situations including single parent, single child, child password signup with spots_user_id, shared spots_user_id text, and wrong or missing email causing USER_NOT_IN_REDCAP."
-          width="1114"
-          height="861"
+          src="/assets/docs/04-how-matching-works.svg"
+          alt="Diagram 4: Sign-in email comes from UTHealth AWS Cognito, then REDCap is checked on email_primary or spots_user_id. Two matches show Reporting as; one match goes straight in."
+          width="920"
+          height="720"
         />
       </li>
     </ol>
