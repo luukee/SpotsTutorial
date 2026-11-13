@@ -390,6 +390,11 @@
 
     <section class="panel" aria-labelledby="cheat-sheet">
       <h2 id="cheat-sheet">Quick staff cheat sheet</h2>
+      <p>
+        <strong>Rule:</strong> <code>email_primary</code> should always be the
+        <strong>parent’s email</strong> on both the parent and child REDCap rows
+        (so assent, gift cards, and other automated emails go to the parent).
+      </p>
       <div class="table-wrap">
         <table>
           <caption class="visually-hidden">
@@ -405,25 +410,21 @@
           </thead>
           <tbody>
             <tr>
-              <td>Different <code>email_primary</code></td>
-              <td>Each with their own email</td>
-              <td>No</td>
-              <td>Each to their own <code>email_primary</code></td>
-            </tr>
-            <tr>
               <td>
-                Same <code>email_primary</code> + child email in
-                <code>spots_user_id</code>
+                Shared parent <code>email_primary</code> only
               </td>
-              <td>Parent with family email; child with own email</td>
-              <td>Yes for parent email; no for child’s own email</td>
+              <td>Shared parent email</td>
+              <td>Yes</td>
               <td>Parent <code>email_primary</code></td>
             </tr>
             <tr>
-              <td>Same <code>email_primary</code> only</td>
-              <td>Shared email</td>
-              <td>Yes</td>
-              <td>Shared <code>email_primary</code></td>
+              <td>
+                Shared parent <code>email_primary</code> + child email in
+                <code>spots_user_id</code>
+              </td>
+              <td>Parent with parent email; child with own email</td>
+              <td>Yes for parent email; no for child’s own email</td>
+              <td>Parent <code>email_primary</code></td>
             </tr>
           </tbody>
         </table>
