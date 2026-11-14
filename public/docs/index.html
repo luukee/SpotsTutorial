@@ -9,18 +9,22 @@
     content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self' data:;"
   />
   <meta name="theme-color" content="#065395" />
-  <title>SPOTS Docs — Signup and Login</title>
+  <title>SPOTS Study - Family Setup</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <style>
     :root {
       color-scheme: light;
-      --bg: #f4f7fb;
+      --bg: #fff;
       --ink: #12304f;
       --muted: #4a627a;
       --accent: #065395;
       --frame: rgba(0, 0, 0, 0.12);
       --card: #fff;
       --soft: #e8eef5;
+      --warn: #fff3d6;
+      --warn-edge: #d4a017;
+      --redcap-bg: #f8eaea;
+      --app-bg: #e8eef8;
     }
 
     * {
@@ -53,7 +57,7 @@
     }
 
     main {
-      width: min(1120px, calc(100% - 2rem));
+      width: min(720px, calc(100% - 2rem));
       margin: 0 auto;
       padding: 1.5rem 0 2.5rem;
     }
@@ -66,42 +70,80 @@
 
     h2 {
       margin: 0 0 0.65rem;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
+      line-height: 1.3;
+      color: var(--accent);
+    }
+
+    h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1.05rem;
       line-height: 1.3;
     }
 
     .lede {
-      margin: 0 0 1.25rem;
+      margin: 0 0 1.35rem;
       color: var(--muted);
       font-size: 1rem;
-      max-width: 46rem;
     }
 
-    .staff-note {
+    .major {
       margin: 0 0 1.5rem;
-      padding: 0.85rem 1rem;
-      max-width: 46rem;
-      background: var(--soft);
-      border-left: 4px solid var(--accent);
-      border-radius: 0 6px 6px 0;
-      color: var(--ink);
+      padding: 1.15rem 1.15rem 1.25rem;
+      background: var(--card);
+      border: 1px solid var(--frame);
+      border-radius: 10px;
     }
 
-    .staff-note p {
-      margin: 0;
+    .major.redcap {
+      background: var(--redcap-bg);
+    }
+
+    .major.redcap > .panel {
+      background: #fff;
+    }
+
+    .major.redcap .setup-card h4 {
+      background: #b33a3a;
+    }
+
+    .major.redcap .setup-card.highlight h4 {
+      background: #b8860b;
+    }
+
+    .major.app {
+      background: var(--app-bg);
+    }
+
+    .major.app > .panel {
+      background: #fff;
+    }
+
+    .major > h2 {
+      margin-bottom: 0.35rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 2px solid var(--soft);
+      color: #000;
+    }
+
+    .major > .lede {
+      margin-bottom: 1rem;
     }
 
     .panel {
-      margin: 0 0 1.5rem;
-      padding: 1.1rem 1.15rem 1.2rem;
-      background: var(--card);
+      margin: 0 0 1rem;
+      padding: 0.95rem 1rem 1.05rem;
+      background: var(--soft);
       border: 1px solid var(--frame);
       border-radius: 8px;
-      max-width: 52rem;
+    }
+
+    .major > .panel:last-child {
+      margin-bottom: 0;
     }
 
     .panel p {
-      margin: 0 0 0.75rem;
+      margin: 0 0 0.65rem;
     }
 
     .panel p:last-child,
@@ -112,111 +154,180 @@
 
     .panel ul,
     .panel ol {
-      margin: 0 0 0.75rem;
+      margin: 0 0 0.65rem;
       padding-left: 1.25rem;
     }
 
     .panel li + li {
-      margin-top: 0.45rem;
+      margin-top: 0.4rem;
     }
 
-    .panel code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.92em;
-      background: var(--soft);
-      padding: 0.05em 0.3em;
-      border-radius: 3px;
+    .rule {
+      margin: 0 0 1rem;
+      padding: 0.85rem 1rem;
+      background: #fff;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 6px 6px 0;
     }
 
-    .flow-steps {
-      margin: 0.75rem 0 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .flow-steps li {
+    .rule p {
       margin: 0;
-      padding: 0.4rem 0.65rem;
-      background: var(--soft);
-      border-radius: 6px;
-      font-size: 0.95rem;
-    }
-
-    .flow-steps .arrow {
-      padding: 0;
-      background: transparent;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .qa dt {
-      margin: 0.85rem 0 0.25rem;
       font-weight: 650;
     }
 
-    .qa dt:first-child {
+    .gotcha {
+      margin: 0 0 0.5rem;
+      padding: 1rem 1.1rem;
+      max-width: none;
+      color: var(--ink);
+      background: var(--card);
+      border: 1px solid var(--frame);
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
+    .extra-note {
+      margin: 0.75rem 0 0;
+      padding: 0.55rem 0.75rem;
+      background: #fff;
+      border: 1px solid var(--frame);
+      border-radius: 8px;
+    }
+
+    .extra-note summary {
+      cursor: pointer;
+      font-weight: 400;
+      color: var(--ink);
+      list-style: none;
+    }
+
+    .extra-note summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .extra-note summary::before {
+      content: "";
+      display: inline-block;
+      width: 0.4em;
+      height: 0.4em;
+      margin-right: 0.45em;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(-45deg);
+      vertical-align: 0.1em;
+    }
+
+    .extra-note[open] summary::before {
+      transform: rotate(45deg);
+      vertical-align: 0.2em;
+    }
+
+    .extra-note p {
+      margin: 0.55rem 0 0;
+    }
+
+    details.panel {
+      padding-left: 1.35rem;
+    }
+
+    details.panel > summary {
+      cursor: pointer;
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+
+    details.panel > summary + .table-wrap {
+      margin-top: 0.75rem;
+    }
+
+    .setup-grid {
+      display: grid;
+      gap: 0.65rem;
+      margin: 0.75rem 0 0;
+    }
+
+    @media (min-width: 560px) {
+      .setup-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .setup-card {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      border: 1px solid var(--frame);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .setup-card.highlight {
+      border-color: var(--warn-edge);
+    }
+
+    .setup-card h4 {
+      margin: 0;
+      padding: 0.55rem 0.85rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      border-bottom: 1px solid var(--frame);
+    }
+
+    .setup-card.highlight h4 {
+      background: #b8860b;
+    }
+
+    .setup-card dl {
+      margin: 0;
+      padding: 0.75rem 0.85rem 0.85rem;
+      background: #fff;
+    }
+
+    .setup-card.highlight dl {
+      background: var(--warn);
+    }
+
+    .setup-card dt {
+      font-weight: 650;
+      margin-top: 0.45rem;
+    }
+
+    .setup-card dt:first-child {
       margin-top: 0;
     }
 
-    .qa dd {
-      margin: 0;
-      color: var(--ink);
+    .setup-card dd {
+      margin: 0.1rem 0 0;
     }
 
     .table-wrap {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      margin-top: 0.5rem;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.95rem;
+      background: #fff;
     }
 
     th,
     td {
       text-align: left;
       vertical-align: top;
-      padding: 0.65rem 0.7rem;
+      padding: 0.55rem 0.6rem;
       border-bottom: 1px solid var(--frame);
     }
 
     th {
       background: var(--soft);
       font-weight: 650;
-    }
-
-    .diagrams-heading {
-      margin: 2rem 0 0.75rem;
-    }
-
-    .doc-pages {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .doc-pages li {
-      margin: 0;
-      padding: 0;
-    }
-
-    .doc-pages img {
-      display: block;
-      width: auto;
-      max-width: 100%;
-      height: auto;
-      border: 1px solid var(--frame);
-      border-radius: 8px;
-      background: #fff;
     }
 
     .visually-hidden {
@@ -235,241 +346,200 @@
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <main id="main-content">
-    <h1>SPOTS Signup and Login</h1>
+    <h1>SPOTS Study - Family Setup</h1>
     <p class="lede">
-      Staff reference for how REDCap <code>email_primary</code> and
-      <code>spots_user_id</code> affect Google and password sign-in on
-      spotsymptoms.org. This page is unlisted — share the URL only with study staff.
+      Study staff only. Two separate jobs: set the family up in
+      <strong>REDCap</strong>, then tell them how to sign up on
+      <strong>spotsymptoms.org</strong>.
     </p>
-    <aside class="staff-note" aria-label="Audience">
-      <p>
-        Written for UTH study staff answering onboarding questions. Prefer the
-        participant-facing wording below when talking with families.
-      </p>
-    </aside>
 
-    <section class="panel" aria-labelledby="signup-fields">
-      <h2 id="signup-fields">Signup — User ID vs Email</h2>
-      <p>
-        On email/password signup, families see two different boxes. They are
-        <strong>not</strong> interchangeable.
-      </p>
-      <div class="table-wrap">
-        <table>
-          <caption class="visually-hidden">
-            Signup form fields and what to enter
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Box on signup</th>
-              <th scope="col">What to enter</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>User ID</strong></td>
-              <td>
-                The value in REDCap <code>spots_user_id</code> (usually a
-                username staff created, e.g. <code>smith_parent</code>). Families
-                should not invent this.
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Email</strong></td>
-              <td>
-                The email they will sign in with. For the usual family case, this
-                matches REDCap <code>email_primary</code>.
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Password</strong></td>
-              <td>One the family creates.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p>
-        <strong>Child logs in alone with their own email:</strong> staff put the
-        child’s email in that child’s <code>spots_user_id</code>, keep the
-        <strong>parent</strong> email on <code>email_primary</code>, and the child
-        enters that same child email in <strong>both</strong> User ID and Email at
-        signup.
-      </p>
-      <p>
-        <strong>Google:</strong> no User ID box — they use Sign in with Google with
-        the matching email. Still tell password-signup families to enter the User
-        ID staff gave them (do not say “Google doesn’t need a User ID”).
-      </p>
+    <section class="major redcap" aria-labelledby="redcap-setup">
+      <h2 id="redcap-setup">1. REDCap Family Setup</h2>
+      <p class="lede">What you enter in REDCap for the parent and child records.</p>
+
+      <aside class="rule" aria-label="Always do this in REDCap">
+        <p>
+          In REDCap, always set Primary email to the parent’s email on both the parent and
+          child records.
+        </p>
+      </aside>
+
+      <section class="panel" aria-labelledby="redcap-default">
+        <h3 id="redcap-default">Default (most families)</h3>
+        <p>Parent and child share one login email.</p>
+        <div class="setup-grid">
+          <article class="setup-card">
+            <h4>Parent</h4>
+            <dl>
+              <dt>Primary email</dt>
+              <dd>Parent’s email</dd>
+              <dt>Username</dt>
+              <dd>e.g. smith_parent</dd>
+            </dl>
+          </article>
+          <article class="setup-card">
+            <h4>Child</h4>
+            <dl>
+              <dt>Primary email</dt>
+              <dd>Parent’s email (same)</dd>
+              <dt>Username</dt>
+              <dd>e.g. smith_child</dd>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="redcap-exception">
+        <h3 id="redcap-exception">Exception — child signs in alone</h3>
+        <p>Use this only when the child needs their own login email.</p>
+        <div class="setup-grid">
+          <article class="setup-card">
+            <h4>Parent</h4>
+            <dl>
+              <dt>Primary email</dt>
+              <dd>Parent’s email</dd>
+              <dt>Username</dt>
+              <dd>e.g. smith_parent</dd>
+            </dl>
+          </article>
+          <article class="setup-card highlight">
+            <h4>Child</h4>
+            <dl>
+              <dt>Primary email</dt>
+              <dd>Parent’s email (same)</dd>
+              <dt>Username</dt>
+              <dd>Child’s email</dd>
+            </dl>
+          </article>
+        </div>
+        <details class="extra-note">
+          <summary>Info</summary>
+          <p>Automated emails still go to the parent (Primary email).</p>
+        </details>
+      </section>
     </section>
 
-    <section class="panel" aria-labelledby="how-login-works">
-      <h2 id="how-login-works">How login matching works</h2>
-      <p>
-        After someone signs in, SPOTS gets their account email from
-        <strong>UTHealth AWS Cognito</strong> (the auth system for
-        spotsymptoms.org). That email is looked up in REDCap against
-        <code>email_primary</code> <strong>or</strong> <code>spots_user_id</code>.
-        There is no separate “Cognito email” field in REDCap — Cognito is only
-        where the signed-in email comes from before we check REDCap.
+    <section class="major app" aria-labelledby="app-signup">
+      <h2 id="app-signup">2. spotsymptoms.org Family Signup</h2>
+      <p class="lede">
+        What to tell the family after REDCap is done. This is the spotsymptoms.org app — not
+        REDCap.
       </p>
-      <ol class="flow-steps" aria-label="Login match steps">
-        <li>Google or password sign-in</li>
-        <li class="arrow" aria-hidden="true">→</li>
-        <li>UTHealth AWS Cognito email</li>
-        <li class="arrow" aria-hidden="true">→</li>
-        <li>REDCap <code>email_primary</code> or <code>spots_user_id</code></li>
-      </ol>
+
+      <section class="panel" aria-labelledby="app-default">
+        <h3 id="app-default">Default (shared parent email)</h3>
+        <p>Parent and child both sign in with the parent email.</p>
+        <div class="setup-grid">
+          <article class="setup-card">
+            <h4>Parent</h4>
+            <dl>
+              <dt>Username</dt>
+              <dd>e.g. smith_parent (from REDCap)</dd>
+              <dt>Email</dt>
+              <dd>Parent’s email</dd>
+            </dl>
+          </article>
+          <article class="setup-card">
+            <h4>Child</h4>
+            <dl>
+              <dt>Username</dt>
+              <dd>e.g. smith_child (from REDCap)</dd>
+              <dt>Email</dt>
+              <dd>Parent’s email (same)</dd>
+            </dl>
+          </article>
+        </div>
+        <details class="extra-note">
+          <summary>Info</summary>
+          <p>
+            After sign-in they <strong>choose Parent or Child</strong>, then
+            report. Google: use the Google account for the parent’s email (no
+            Username box).
+          </p>
+        </details>
+      </section>
+
+      <section class="panel" aria-labelledby="app-exception">
+        <h3 id="app-exception">Exception — child signs in alone</h3>
+        <p>Use this only when the child needs their own login email.</p>
+        <div class="setup-grid">
+          <article class="setup-card">
+            <h4>Parent</h4>
+            <dl>
+              <dt>Username</dt>
+              <dd>e.g. smith_parent (from REDCap)</dd>
+              <dt>Email</dt>
+              <dd>Parent’s email</dd>
+            </dl>
+          </article>
+          <article class="setup-card highlight">
+            <h4>Child</h4>
+            <dl>
+              <dt>Username</dt>
+              <dd>Child’s email</dd>
+              <dt>Email</dt>
+              <dd>Child’s email (same)</dd>
+            </dl>
+          </article>
+        </div>
+        <details class="extra-note">
+          <summary>Info</summary>
+          <p>
+            Child goes straight into their account. Parent still signs in with
+            the parent email and chooses Parent or Child. Google: each person
+            uses the Google account for their Email above.
+          </p>
+        </details>
+      </section>
+
+      <details class="panel" id="signup-boxes">
+        <summary>Email and password boxes on the app</summary>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">
+              What to enter in each spotsymptoms.org signup box
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Box on the app</th>
+                <th scope="col">What to enter</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Username</strong></td>
+                <td>
+                  The Username from REDCap for that person. Do not invent a new
+                  one.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Email</strong></td>
+                <td>The email they will use to sign in.</td>
+              </tr>
+              <tr>
+                <td><strong>Password</strong></td>
+                <td>One the family creates.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Google sign-in has no Username box — they use Sign in with Google with
+          the matching email. Still give password families the Username from
+          REDCap.
+        </p>
+      </details>
     </section>
 
-    <section class="panel" aria-labelledby="quick-answers">
-      <h2 id="quick-answers">Quick answers</h2>
-      <dl class="qa">
-        <dt>Is the signup User ID supposed to be a username or an email?</dt>
-        <dd>
-          Usually a <strong>username</strong> from REDCap <code>spots_user_id</code>.
-          Use an <strong>email</strong> in User ID only for the child-alone case
-          (same child email in User ID and Email).
-        </dd>
-
-        <dt>Can a parent and child share the same <code>email_primary</code> and both report?</dt>
-        <dd>
-          Yes. That is the normal design. After sign-in they get the
-          <strong>Reporting as</strong> screen and pick Parent or Child.
-        </dd>
-
-        <dt>Do we need a new REDCap email field for parent automated emails?</dt>
-        <dd>
-          No. Keep using <code>email_primary</code> for assent, gift cards, and
-          other parent emails.
-        </dd>
-
-        <dt>When should a child’s own email go in <code>spots_user_id</code>?</dt>
-        <dd>
-          Only if that child should sign in alone with their own email (including
-          Google). Parent email stays on <code>email_primary</code> so automated
-          parent emails still work.
-        </dd>
-
-        <dt>Can that child use Sign in with Google?</dt>
-        <dd>
-          Yes, if their Google account email matches the child’s
-          <code>spots_user_id</code>. Only the child record matches, so they go
-          straight into the child’s account (no profile picker).
-        </dd>
-
-        <dt>Does capitalization matter in <code>spots_user_id</code>?</dt>
-        <dd>
-          Login matching is case-insensitive. Still enter emails in lowercase
-          for consistency elsewhere in REDCap.
-        </dd>
-      </dl>
-    </section>
-
-    <section class="panel" aria-labelledby="what-to-say">
-      <h2 id="what-to-say">Suggested wording for families</h2>
-      <ul>
-        <li>
-          Sign in with the <strong>same email</strong> that’s on their SPOTS
-          record (Google or password).
-        </li>
-        <li>
-          For email/password signup, enter the <strong>User ID</strong> staff gave
-          them, plus their email and a password.
-        </li>
-        <li>
-          If parent and child share one email, after login they
-          <strong>choose Parent or Child</strong>.
-        </li>
-      </ul>
-      <p>
-        Keep REDCap field names (<code>email_primary</code>,
-        <code>spots_user_id</code>) and Cognito details for staff setup talk —
-        families only need the email and User ID steps above.
-      </p>
-    </section>
-
-    <section class="panel" aria-labelledby="cheat-sheet">
-      <h2 id="cheat-sheet">Quick staff cheat sheet</h2>
-      <p>
-        <strong>Rule:</strong> <code>email_primary</code> should always be the
-        <strong>parent’s email</strong> on both the parent and child REDCap rows
-        (so assent, gift cards, and other automated emails go to the parent).
-      </p>
-      <div class="table-wrap">
-        <table>
-          <caption class="visually-hidden">
-            Login setups, who can sign in, profile picker, and automated emails
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Setup</th>
-              <th scope="col">Who can sign in</th>
-              <th scope="col">Profile picker?</th>
-              <th scope="col">Automated emails</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                Shared parent <code>email_primary</code> only
-              </td>
-              <td>Shared parent email</td>
-              <td>Yes</td>
-              <td>Parent <code>email_primary</code></td>
-            </tr>
-            <tr>
-              <td>
-                Shared parent <code>email_primary</code> + child email in
-                <code>spots_user_id</code>
-              </td>
-              <td>Parent with parent email; child with own email</td>
-              <td>Yes for parent email; no for child’s own email</td>
-              <td>Parent <code>email_primary</code></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <h2 id="diagrams" class="diagrams-heading">Scenario diagrams</h2>
-    <p class="lede">
-      Staff cards for signup, the usual shared-email setup, child-alone login, and
-      how Cognito email is matched in REDCap.
+    <p class="gotcha">
+      The main gotcha: REDCap’s Primary email and the Email box on
+      spotsymptoms.org are not the same thing. In REDCap, Primary email is
+      always the parent’s, because that’s where study messages go. The website
+      Email is just how someone logs in. So a child can sign up with their own
+      email on the site while REDCap still has the parent’s email as Primary
+      email on their record. Mixing those two up is what trips people up.
     </p>
-    <ol class="doc-pages">
-      <li>
-        <img
-          src="/assets/docs/01-signup-fields.svg"
-          alt="Diagram 1: Signup form. User ID is the REDCap spots_user_id username staff created. Email is the sign-in email matching email_primary. Special case: child alone puts the same child email in both User ID and Email."
-          width="920"
-          height="720"
-        />
-      </li>
-      <li>
-        <img
-          src="/assets/docs/02-shared-family-email.svg"
-          alt="Diagram 2: Shared family email. Parent and child both have the same email_primary. Sign-in shows Reporting as to pick Parent or Child. Automated emails go to that shared email_primary."
-          width="920"
-          height="700"
-        />
-      </li>
-      <li>
-        <img
-          src="/assets/docs/03-child-own-email.svg"
-          alt="Diagram 3: Child logs in alone. Parent email stays on email_primary. Child email is in spots_user_id. Parent email sign-in shows Reporting as. Child email sign-in goes straight into the child account. Automated emails still go to the parent."
-          width="920"
-          height="760"
-        />
-      </li>
-      <li>
-        <img
-          src="/assets/docs/04-how-matching-works.svg"
-          alt="Diagram 4: Sign-in email comes from UTHealth AWS Cognito, then REDCap is checked on email_primary or spots_user_id. Two matches show Reporting as; one match goes straight in."
-          width="920"
-          height="720"
-        />
-      </li>
-    </ol>
   </main>
 </body>
 </html>
