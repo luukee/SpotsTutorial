@@ -226,22 +226,6 @@
       margin: 0.55rem 0 0;
     }
 
-    details.panel {
-      padding-left: 1.35rem;
-    }
-
-    details.panel > summary {
-      cursor: pointer;
-      font-size: 1.05rem;
-      font-weight: 400;
-      line-height: 1.3;
-      color: var(--ink);
-    }
-
-    details.panel > summary + .table-wrap {
-      margin-top: 0.75rem;
-    }
-
     .setup-grid {
       display: grid;
       gap: 0.65rem;
@@ -304,43 +288,6 @@
       margin: 0.1rem 0 0;
     }
 
-    .table-wrap {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      margin-top: 0.5rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-      background: #fff;
-    }
-
-    th,
-    td {
-      text-align: left;
-      vertical-align: top;
-      padding: 0.55rem 0.6rem;
-      border-bottom: 1px solid var(--frame);
-    }
-
-    th {
-      background: var(--soft);
-      font-weight: 650;
-    }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
   </style>
 </head>
 <body>
@@ -492,45 +439,6 @@
           </p>
         </details>
       </section>
-
-      <details class="panel" id="signup-boxes">
-        <summary>Email and password boxes on the app</summary>
-        <div class="table-wrap">
-          <table>
-            <caption class="visually-hidden">
-              What to enter in each spotsymptoms.org signup box
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Box on the app</th>
-                <th scope="col">What to enter</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Username</strong></td>
-                <td>
-                  The Username from REDCap for that person. Do not invent a new
-                  one.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Email</strong></td>
-                <td>The email they will use to sign in.</td>
-              </tr>
-              <tr>
-                <td><strong>Password</strong></td>
-                <td>One the family creates.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          Google sign-in has no Username box — they use Sign in with Google with
-          the matching email. Still give password families the Username from
-          REDCap.
-        </p>
-      </details>
     </section>
 
     <p class="gotcha">
