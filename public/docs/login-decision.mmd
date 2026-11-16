@@ -11,7 +11,7 @@ flowchart TD
 
   START["<div class='step-where'>Website</div>Person signs in<br/>Google or username + password"]
   START --> EMAIL["<div class='step-where'>Website</div>Has login email from that sign-in"]
-  EMAIL --> LOOKUP["<div class='step-where'>Website</div>Asks REDCap for any person where<br/>Username = login email<br/>OR Primary email = login email"]
+  EMAIL --> LOOKUP["<div class='step-where'>Website</div>Asks REDCap for any person where<br/>Username = login email<br/>OR<br/>Primary email = login email"]
   LOOKUP --> Q{"<div class='step-where'>Website</div>How many REDCap people matched?"}
 
   Q -->|0| NONE["<div class='step-where'>Website</div>Cannot use SPOTS"]
