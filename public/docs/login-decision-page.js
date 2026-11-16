@@ -43,7 +43,7 @@
     },
   });
 
-  fetch('./login-decision.mmd')
+  fetch('/docs/login-decision.mmd')
     .then(function (response) {
       if (!response.ok) {
         throw new Error('Could not load login-decision.mmd');
