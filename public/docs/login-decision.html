@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self' blob:; font-src 'self' data:;"
+  />
+  <meta name="theme-color" content="#065395" />
+  <title>SPOTS Study - How login picks Parent or Child</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fff;
+      --ink: #12304f;
+      --muted: #4a627a;
+      --accent: #065395;
+      --frame: rgba(0, 0, 0, 0.12);
+      --soft: #e8eef5;
+      --redcap-bg: #f8eaea;
+      --app-bg: #e8eef8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.45;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 10;
+      padding: 0.75rem 1rem;
+      background: #fff;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+    }
+
+    main {
+      width: min(900px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 1.5rem 0 2.5rem;
+    }
+
+    .top-nav {
+      margin: 0 0 1rem;
+      font-size: 0.95rem;
+    }
+
+    .top-nav a {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    h1 {
+      margin: 0 0 0.35rem;
+      font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+      line-height: 1.25;
+    }
+
+    .lede {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .edit-note {
+      margin: 0 0 1.25rem;
+      padding: 0.75rem 1rem;
+      background: var(--soft);
+      border: 1px solid var(--frame);
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .edit-note code {
+      font-size: 0.9em;
+    }
+
+    .diagram-wrap {
+      position: relative;
+      margin: 0;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid var(--frame);
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+
+    .diagram-wrap[aria-busy="true"]::before {
+      content: "Loading chart…";
+      display: block;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .diagram-key {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      z-index: 1;
+      margin: 0;
+      padding: 0.55rem 0.7rem;
+      max-width: min(16rem, calc(100% - 1.5rem));
+      background: #fff;
+      color: #12304f;
+      border: 1px solid var(--frame);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .diagram-key strong {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .diagram-key ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .diagram-key-head {
+      margin-bottom: 0.35rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--frame);
+      font-weight: 700;
+    }
+
+    .diagram-key li + li {
+      margin-top: 0.2rem;
+    }
+
+    .diagram-key code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.95em;
+      color: #12304f;
+    }
+
+    .error {
+      margin: 0;
+      padding: 0.85rem 1rem;
+      background: var(--redcap-bg);
+      border: 1px solid var(--frame);
+      border-radius: 8px;
+      color: var(--ink);
+    }
+
+    /* Mermaid injects SVG; keep it readable on small screens */
+    .diagram-wrap .mermaid {
+      display: flex;
+      justify-content: center;
+    }
+
+    .diagram-wrap svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .diagram-wrap .step-where {
+      display: block;
+      margin: 0 0 0.4rem;
+      padding: 0 0 0.3rem;
+      border-bottom: 1px solid currentColor;
+      font-weight: 700;
+      font-size: 0.9em;
+      letter-spacing: 0.02em;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <main id="main-content">
+    <p class="top-nav"><a href="./index.html">← Back to Family Setup</a></p>
+
+    <h1>How login picks Parent or Child</h1>
+    <p class="lede">
+      Study staff only. One flowchart: REDCap setup and what the website checks at
+      login. Every box is tagged <strong>REDCap</strong> or <strong>Website</strong>.
+    </p>
+    <p class="edit-note">
+      To change this chart later, edit
+      <code>public/docs/login-decision.mmd</code> and refresh this page. The chart
+      loads from that file.
+    </p>
+
+    <div
+      id="diagram-wrap"
+      class="diagram-wrap"
+      aria-busy="true"
+      aria-live="polite"
+    >
+      <aside class="diagram-key" aria-label="REDCap field key">
+        <strong>Key</strong>
+        <ul>
+          <li class="diagram-key-head">Term / REDCap ID</li>
+          <li>Username / <code>spots_user_id</code></li>
+          <li>Primary email / <code>email_primary</code></li>
+        </ul>
+      </aside>
+      <pre id="diagram" class="mermaid" hidden></pre>
+    </div>
+    <p id="diagram-error" class="error" hidden role="alert"></p>
+  </main>
+
+  <script src="./vendor/mermaid.min.js"></script>
+  <script src="./login-decision-page.js"></script>
+</body>
+</html>

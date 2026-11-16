@@ -1,0 +1,28 @@
+%% Editable source for login-decision.html
+%% Username before Primary email (same order as website signup).
+%% Each node: bold Where heading (REDCap / Website) with bottom border, then step text.
+%% Variable key lives in login-decision.html (top-right of #diagram-wrap).
+flowchart TD
+  S1["<div class='step-where'>REDCap</div>Shared login most families<br/>Username: smith_parent and smith_child<br/>Primary email: parent on both records"]
+  S2["<div class='step-where'>REDCap</div>Child own login<br/>Username: child email<br/>Primary email: parent on both records"]
+
+  S1 --> START
+  S2 --> START
+
+  START["<div class='step-where'>Website</div>Person signs in<br/>Google or username + password"]
+  START --> EMAIL["<div class='step-where'>Website</div>Has login email from that sign-in"]
+  EMAIL --> LOOKUP["<div class='step-where'>Website</div>Asks REDCap for any person where<br/>Username = login email<br/>OR Primary email = login email"]
+  LOOKUP --> Q{"<div class='step-where'>Website</div>How many REDCap people matched?"}
+
+  Q -->|0| NONE["<div class='step-where'>Website</div>Cannot use SPOTS"]
+  Q -->|1| ONE["<div class='step-where'>Website</div>Go straight in as that person"]
+  Q -->|2+| MANY["<div class='step-where'>Website</div>Reporting as — pick Parent or Child<br/>Later: header switcher can switch again"]
+
+  S1 -.->|parent email matches both on Primary email| MANY
+  S2 -.->|child email matches child on Username only| ONE
+  S2 -.->|parent email matches both on Primary email| MANY
+
+  classDef redcap fill:#f8eaea,stroke:#b33a3a,color:#12304f
+  classDef website fill:#e8eef8,stroke:#065395,color:#12304f
+  class S1,S2 redcap
+  class START,EMAIL,LOOKUP,NONE,ONE,MANY website
